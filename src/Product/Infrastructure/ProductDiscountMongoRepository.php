@@ -50,7 +50,7 @@ final class ProductDiscountMongoRepository implements ProductDiscountRepository
     {
         $this->collection->insertOne([
             'sku' => $productDiscount->sku()->value(),
-            'percentage' => $productDiscount->name()->value(),
+            'percentage' => $productDiscount->percentage()->value(),
             'category' => $productDiscount->category()->value(),
         ]);
     }
