@@ -1,0 +1,30 @@
+version: '3.1'
+services:
+    webserver:
+        image: 'nginx:alpine'
+        working_dir: /application
+        volumes:
+            - '.:/application'
+            - './docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf'
+        ports:
+            - '33000:80'
+
+    php-fpm:
+        build: docker/php-fpm
+        working_dir: /application
+        volumes:
+            - '.:/application'
+        environment:
+            WEBSERVER_TEST_HOST: 'http://webserver'
+            MONGO_HOST: mongo
+            MONGO_USERNAME: root
+            MONGO_PASSWORD: root
+            MONGO_DATABASE: catalog
+
+    mongo:
+        image: mongo
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: root
+            MONGO_INITDB_DATABASE: catalog
