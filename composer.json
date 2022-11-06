@@ -12,11 +12,14 @@
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.1.*",
         "symfony/runtime": "6.1.*",
-        "symfony/yaml": "6.1.*"
+        "symfony/yaml": "6.1.*",
+        "mongodb/mongodb": "^1.0"
     },
     "require-dev": {
-        "mongodb/mongodb": "^1.13",
         "phpunit/phpunit": "^9.5"
+    },
+    "provide": {
+        "ext-mongodb": "*"
     },
     "config": {
         "allow-plugins": {
