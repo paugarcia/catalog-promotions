@@ -6,7 +6,9 @@ use App\Product\Domain\Repository\ProductRepository;
 use App\Product\Domain\Product;
 
 use App\Product\Domain\ValueObjects\ProductSku;
+use App\Product\Domain\ValueObjects\ProductName;
 use App\Product\Domain\ValueObjects\ProductCategory;
+use App\Product\Domain\ValueObjects\ProductPrice;
 
 use MongoDB\Client;
 
@@ -29,16 +31,20 @@ final class ProductMongoRepository implements ProductRepository
     public function getAll(): array
     {
         $products = $this->collection->find();
+        $productsList = [];
         
         if (!empty($products)) {
             foreach ($products as $product) {
-                var_dump($products);
+                $productsList[] = new Product(
+                    new ProductSku($product['sku']),
+                    new ProductName($product['name']),
+                    new ProductCategory($product['category']),
+                    new ProductPrice($product['price']),
+                );
             };
         }
 
-        die;
-
-        return [];
+        return $productsList;
     }
 
     public function save(Product $product): void
