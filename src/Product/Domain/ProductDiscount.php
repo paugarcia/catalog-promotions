@@ -23,7 +23,7 @@ final class ProductDiscount
         $this->validateParams();
     }
 
-    public function sku(): ProductSku
+    public function sku(): ?ProductSku
     {
         return $this->sku;
     }
@@ -33,7 +33,7 @@ final class ProductDiscount
         return $this->percentage;
     }
 
-    public function category(): ProductCategory
+    public function category(): ?ProductCategory
     {
         return $this->category;
     }
