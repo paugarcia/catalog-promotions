@@ -15,6 +15,7 @@
         "symfony/yaml": "6.1.*"
     },
     "require-dev": {
+        "mongodb/mongodb": "^1.13",
         "phpunit/phpunit": "^9.5"
     },
     "config": {

@@ -16,3 +16,7 @@ composer.phar
 
 ### VisualStudioCode ###
 .vscode/*
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
