@@ -11,7 +11,12 @@ use App\Product\Application\Commands\SaveProduct\SaveProductApplicationService;
 use App\Product\Application\Commands\SaveProduct\SaveProductCommand;
 use App\Product\Application\Commands\SaveProduct\SaveProductCommandHandler;
 
+use App\Product\Application\Commands\SaveProductDiscount\SaveProductDiscountApplicationService;
+use App\Product\Application\Commands\SaveProductDiscount\SaveProductDiscountCommand;
+use App\Product\Application\Commands\SaveProductDiscount\SaveProductDiscountCommandHandler;
+
 use App\Product\Infrastructure\ProductMongoRepository;
+use App\Product\Infrastructure\ProductDiscountMongoRepository;
 
 
 class IndexController extends AbstractController
@@ -29,8 +34,23 @@ class IndexController extends AbstractController
         $saveProductCommandHandler->handle(new SaveProductCommand('000004', 'Naima embellished suede sandals', 'sandals', 79500));
         $saveProductCommandHandler->handle(new SaveProductCommand('000005', 'Nathane leather sneakers', 'sneakers', 59000));
 
+        
+        $productDiscountMongoRepo = new ProductDiscountMongoRepository();
+        $saveProductDiscountApplicationService = new SaveProductDiscountApplicationService($productDiscountMongoRepo);
+        $saveProductDiscountCommandHandler = new SaveProductDiscountCommandHandler($saveProductDiscountApplicationService);
+
+        $saveProductDiscountCommandHandler->handle(new SaveProductDiscountCommand(30, null, 'boots'));
+        $saveProductDiscountCommandHandler->handle(new SaveProductDiscountCommand(15, '000003', null));
+
+       
         echo "<pre>";
-        var_dump($productMongoRepo->getAll());die;
+        var_dump($productMongoRepo->getAll());
+        
+        
+        var_dump("HOLA");
+        var_dump($productDiscountMongoRepo->getAll());
+
+        die;
 
         return new Response("Hola mundo");
     }

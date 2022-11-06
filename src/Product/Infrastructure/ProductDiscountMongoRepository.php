@@ -40,7 +40,7 @@ final class ProductDiscountMongoRepository implements ProductDiscountRepository
                     new ProductSku($discount['sku']),
                     new ProductCategory($discount['category'])
                 );
-            };
+            }
         }
         
         return $discountList;

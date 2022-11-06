@@ -41,7 +41,7 @@ final class ProductMongoRepository implements ProductRepository
                     new ProductCategory($product['category']),
                     new ProductPrice($product['price']),
                 );
-            };
+            }
         }
 
         return $productsList;
