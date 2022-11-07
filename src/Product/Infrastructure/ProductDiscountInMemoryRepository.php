@@ -13,23 +13,22 @@ use App\Product\Domain\ValueObjects\ProductCategory;
 
 final class ProductDiscountInMemoryRepository implements ProductDiscountRepository
 {
-    /** @var ProductDiscount[] */
-    private array $productDiscounts = [];
+    private array $productDiscounts = [
+        [
+            'percentage' => 30,
+            'sku' => null,
+            'category' => 'boots',
+        ],
+        [
+            'percentage' => 15,
+            'sku' => '000003',
+            'category' => null,
+        ],
+    ];
 
     public function getAll(): array
     {
-        $discountList = [
-            [
-                'percentage' => 30,
-                'sku' => null,
-                'category' => 'boots',
-            ],
-            [
-                'percentage' => 15,
-                'sku' => '000003',
-                'category' => null,
-            ],
-        ];
+        $discountList = [];
 
         if (!empty($this->productDiscounts)) {
             foreach ($this->productDiscounts as $discount) {
