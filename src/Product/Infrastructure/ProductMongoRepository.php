@@ -57,10 +57,23 @@ final class ProductMongoRepository implements ProductRepository
         ]);
     }
 
-    // TODO: Develop "getBySku" function
     public function getBySku(ProductSku $sku): ?Product
     {
-        return null;    
+        $product = null;
+        $item = $this->collection->findOne([
+            'sku' => $sku->value()
+        ]);
+
+        if (!empty($item)) {
+            $product = new Product(
+                new ProductSku($item['sku']),
+                new ProductName($item['name']),
+                new ProductCategory($item['category']),
+                new ProductPrice($product['price'])
+            );
+        }
+
+        return $product;
     }
 
     // TODO: Develop "getByProductCategory" function
