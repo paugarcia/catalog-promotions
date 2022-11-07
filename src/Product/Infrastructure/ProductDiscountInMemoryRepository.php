@@ -18,7 +18,18 @@ final class ProductDiscountInMemoryRepository implements ProductDiscountReposito
 
     public function getAll(): array
     {
-        $discountList = [];
+        $discountList = [
+            [
+                'percentage' => 30,
+                'sku' => null,
+                'category' => 'boots',
+            ],
+            [
+                'percentage' => 15,
+                'sku' => '000003',
+                'category' => null,
+            ],
+        ];
 
         if (!empty($this->productDiscounts)) {
             foreach ($this->productDiscounts as $discount) {

@@ -11,7 +11,7 @@ use App\Product\Domain\ValueObjects\ProductName;
 use App\Product\Domain\ValueObjects\ProductPrice;
 use App\Product\Domain\ValueObjects\ProductCategory;
 
-use App\Product\Domain\Repository\ProductAlreadyExistException;
+use App\Product\Domain\Exceptions\ProductAlreadyExistException;
 
 final class SaveProductApplicationService
 {
@@ -22,16 +22,13 @@ final class SaveProductApplicationService
         $this->productRepository = $productRepository;
     }
 
-    public function save(ProductSku $productSku, ProductName $productName, ProductCategory $productCategory, ProductPrice $productPrice)
+    public function save(ProductSku $productSku, ProductName $productName, ProductCategory $productCategory, ProductPrice $productPrice): void
     {
-        // TODO: VALIDATE IF EXIST
-        /*
         if (!empty($this->productRepository->getBySku($productSku))){
             throw new ProductAlreadyExistException(
                 sprintf('Already exist a product with this sku: %s', $productSku->value())
             );
         }
-        */
 
         $product = new Product($productSku, $productName, $productCategory, $productPrice);
 

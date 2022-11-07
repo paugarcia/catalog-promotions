@@ -19,7 +19,7 @@ final class SaveProductDiscountApplicationService
         $this->productDiscountRepository = $productDiscountRepository;
     }
 
-    public function save(ProductDiscount $productDiscount)
+    public function save(ProductDiscount $productDiscount): void
     {
         $this->productDiscountRepository->save($productDiscount);
     }

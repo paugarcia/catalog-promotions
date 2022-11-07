@@ -23,8 +23,8 @@ final class SaveProductDiscountCommandHandler implements CommandHandler
     public function handle(Command $command): void
     {
         $discountPercentage = new DiscountPercentage($command->percentage());
-        $productSku = new ProductSku($command->sku());
-        $productCategory = new ProductCategory($command->category());
+        $productSku = ($command->sku() != null) ? new ProductSku($command->sku()) : null;
+        $productCategory = ($command->category() != null) ? new ProductCategory($command->category()) : null;
 
         $productDiscount = new ProductDiscount($discountPercentage, $productSku, $productCategory);
 
