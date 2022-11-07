@@ -89,6 +89,19 @@ final class ProductInMemoryRepository implements ProductRepository
     }
     public function getByProductCategory(ProductCategory $category): array
     {
-        return [];
+        $productsList = [];
+
+        foreach ($this->products as $product) {
+            if($category->value() === $product['category']){
+                $productsList[$product['sku']] = new Product(
+                    new ProductSku($product['sku']),
+                    new ProductName($product['name']),
+                    new ProductCategory($product['category']),
+                    new ProductPrice($product['price'])
+                );
+            }
+        }
+
+        return $productsList;
     }
 }
