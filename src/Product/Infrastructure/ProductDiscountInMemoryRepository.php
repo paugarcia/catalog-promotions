@@ -2,7 +2,6 @@
 
 namespace App\Product\Infrastructure;
 
-use App\Product\Domain\Product;
 use App\Product\Domain\Repository\ProductDiscountRepository;
 
 use App\Product\Domain\ProductDiscount;
