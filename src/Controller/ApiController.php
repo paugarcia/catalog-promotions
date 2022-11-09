@@ -2,38 +2,34 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 use App\Product\Domain\Services\MatchProductsDiscountsService;
 use App\Product\Domain\ValueObjects\ProductCategory;
+
 use App\Product\Infrastructure\ProductDiscountInMemoryRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-
-use Symfony\Component\HttpFoundation\Request;
-
 use App\Product\Infrastructure\ProductInMemoryRepository;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
-class IndexController extends AbstractController
+
+class ApiController extends AbstractController
 {
-    // http://localhost:33000/index?filterByCategory=boots (GET PRODUCTS FILTER BY CATEGORY)
-    // http://localhost:33000/index (GET ALL PRODUCTS)
-    public function index(Request $request) : Response
+    public function index(Request $request) : JsonResponse
     {
         $productInMemoryRepository = new ProductInMemoryRepository();
 
-        if($request->query->get('filterByCategory') !== null){
+        if($request->query->get('filterByCategory') !== null) {
             $productCategoryToFind = new ProductCategory($request->query->get('filterByCategory'));
             $products = $productInMemoryRepository->getByProductCategory($productCategoryToFind);
-        }else{
+        } else {
             $products = $productInMemoryRepository->getAll();
         }
 
         $productDiscountInMemoryRepository = new ProductDiscountInMemoryRepository();
         $matchProductsDiscountsService = new MatchProductsDiscountsService($productDiscountInMemoryRepository->getAll());
 
-        echo "<pre>";
-        var_dump($matchProductsDiscountsService->match($products));
-        return new JsonResponse($matchProductsDiscountsService->match($products));
+        return new JsonResponse($matchProductsDiscountsService->match($products), 200, []);
     }
 }
