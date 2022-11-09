@@ -11,15 +11,15 @@ final class ProductPriceSummary
 {
     private ProductPrice $original;
     private ProductPrice $final;
-    private ?ProductPriceDiscountPercentage $productPriceDiscountPercentage;
+    private ?ProductPriceDiscountPercentage $discountPercentage;
     private Currency $currency;
 
-    public function __construct(ProductPrice $original, ProductPrice $final, Currency $currency, ?ProductPriceDiscountPercentage $productPriceDiscountPercentage)
+    public function __construct(ProductPrice $original, ProductPrice $final, Currency $currency, ?ProductPriceDiscountPercentage $discountPercentage)
     {
         $this->original = $original;
         $this->final = $final;
         $this->currency = $currency;
-        $this->productPriceDiscountPercentage = $productPriceDiscountPercentage;
+        $this->discountPercentage = $discountPercentage;
     }
 
     public function original(): ProductPrice
@@ -37,9 +37,9 @@ final class ProductPriceSummary
         return $this->currency;
     }
 
-    public function productPriceDiscountPercentage(): ?ProductPriceDiscountPercentage
+    public function discountPercentage(): ?ProductPriceDiscountPercentage
     {
-        return $this->productPriceDiscountPercentage;
+        return $this->discountPercentage;
     }
 
     public function toArray(): array
@@ -48,7 +48,7 @@ final class ProductPriceSummary
             'original' => $this->original->value(),
             'final' => $this->final->value(),
             'currency' => $this->currency->value(),
-            'productPriceDiscountPercentage' => $this->productPriceDiscountPercentage->value(),
+            'discount_percentage' => ($this->discountPercentage !== null) ? $this->discountPercentage->value() : $this->discountPercentage(),
         ];
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Product\Domain\Services\MatchProductsDiscountsService;
 use App\Product\Domain\ValueObjects\ProductCategory;
+use App\Product\Infrastructure\ProductDiscountInMemoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +21,7 @@ class IndexController extends AbstractController
     public function index(Request $request) : Response
     {
         $productInMemoryRepository = new ProductInMemoryRepository();
+
         if($request->query->get('filterByCategory') !== null){
             $productCategoryToFind = new ProductCategory($request->query->get('filterByCategory'));
             $products = $productInMemoryRepository->getByProductCategory($productCategoryToFind);
@@ -26,6 +29,11 @@ class IndexController extends AbstractController
             $products = $productInMemoryRepository->getAll();
         }
 
-        return new JsonResponse($products);
+        $productDiscountInMemoryRepository = new ProductDiscountInMemoryRepository();
+        $matchProductsDiscountsService = new MatchProductsDiscountsService($productDiscountInMemoryRepository->getAll());
+
+        echo "<pre>";
+        var_dump($matchProductsDiscountsService->match($products));
+        return new JsonResponse($matchProductsDiscountsService->match($products));
     }
 }

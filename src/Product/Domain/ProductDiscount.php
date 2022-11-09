@@ -38,6 +38,15 @@ final class ProductDiscount
         return $this->category;
     }
 
+    public function toArray(): array
+    {
+        return [
+          'percentage' => $this->percentage()->value(),
+          'sku' => (null !== $this->sku) ? $this->sku()->value() : null,
+          'category' => (null !== $this->category) ? $this->category()->value() : null,
+        ];
+    }
+
     private function validateParams(): void {
         if($this->sku === null && $this->category === null){
             throw new InvalidProductDiscountException(
