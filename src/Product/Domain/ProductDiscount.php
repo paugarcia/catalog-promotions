@@ -38,7 +38,7 @@ final class ProductDiscount
         return $this->category;
     }
 
-    private function validateParams(){
+    private function validateParams(): void {
         if($this->sku === null && $this->category === null){
             throw new InvalidProductDiscountException(
                 sprintf("ProductDiscount not created - Invalid sku and category")

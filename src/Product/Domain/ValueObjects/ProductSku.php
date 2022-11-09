@@ -10,7 +10,7 @@ final class ProductSku
 
     public function __construct(string $sku)
     {
-        $this->validatSku($sku);
+        $this->validateSku($sku);
         $this->sku = $sku;
     }
 
@@ -19,7 +19,7 @@ final class ProductSku
         return $this->sku;
     }
 
-    private function validatSku($sku): void
+    private function validateSku($sku): void
     {
         if (empty($sku)){
             throw new InvalidProductSkuException(sprintf("Invalid product sku, can't be empty."));

@@ -41,4 +41,14 @@ final class Product
     {
         return $this->price;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'sku' => $this->sku->value(),
+            'name' => $this->name->value(),
+            'category' => $this->category->value(),
+            'price' => $this->price->value()
+        ];
+    }
 }
