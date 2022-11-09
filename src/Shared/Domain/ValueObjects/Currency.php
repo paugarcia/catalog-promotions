@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Shared\Domain\ValueObjects;
+namespace Catalog\Shared\Domain\ValueObjects;
 
-use App\Shared\Domain\Exceptions\InvalidCurrencyException;
+use Catalog\Shared\Domain\Exceptions\InvalidCurrencyException;
 
 final class Currency
 {

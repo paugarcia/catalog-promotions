@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Application;
+namespace Catalog\Shared\Application;
 
 Interface CommandHandler
 {

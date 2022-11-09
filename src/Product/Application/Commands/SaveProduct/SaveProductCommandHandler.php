@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Product\Application\Commands\SaveProduct;
+namespace Catalog\Product\Application\Commands\SaveProduct;
 
-use App\Product\Domain\ValueObjects\ProductSku;
-use App\Product\Domain\ValueObjects\ProductName;
-use App\Product\Domain\ValueObjects\ProductPrice;
-use App\Product\Domain\ValueObjects\ProductCategory;
-
-use App\Shared\Application\Command;
-use App\Shared\Application\CommandHandler;
+use Catalog\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductName;
+use Catalog\Product\Domain\ValueObjects\ProductPrice;
+use Catalog\Product\Domain\ValueObjects\ProductSku;
+use Catalog\Shared\Application\Command;
+use Catalog\Shared\Application\CommandHandler;
 
 final class SaveProductCommandHandler implements CommandHandler
 {

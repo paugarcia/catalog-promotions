@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Product\Domain\Exceptions;
+namespace Catalog\Product\Domain\Exceptions;
 
 final class InvalidProductPriceDiscountPercentageException extends \DomainException
 {

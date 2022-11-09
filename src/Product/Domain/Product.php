@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Product\Domain;
+namespace Catalog\Product\Domain;
 
-use App\Product\Domain\ValueObjects\ProductSku;
-use App\Product\Domain\ValueObjects\ProductName;
-use App\Product\Domain\ValueObjects\ProductPrice;
-use App\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductName;
+use Catalog\Product\Domain\ValueObjects\ProductPrice;
+use Catalog\Product\Domain\ValueObjects\ProductSku;
 
 final class Product
 {

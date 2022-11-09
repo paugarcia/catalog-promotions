@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Product\Domain\ValueObjects;
+namespace Catalog\Product\Domain\ValueObjects;
 
-use App\Product\Domain\Exceptions\InvalidProductPriceDiscountPercentageException;
+use Catalog\Product\Domain\Exceptions\InvalidProductPriceDiscountPercentageException;
 
 
 final class ProductPriceDiscountPercentage

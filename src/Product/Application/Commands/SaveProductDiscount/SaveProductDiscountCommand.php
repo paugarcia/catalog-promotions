@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Product\Application\Commands\SaveProductDiscount;
+namespace Catalog\Product\Application\Commands\SaveProductDiscount;
 
-use App\Shared\Application\Command;
+use Catalog\Shared\Application\Command;
 
 final class SaveProductDiscountCommand implements Command
 {

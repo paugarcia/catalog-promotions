@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Product\Domain\ValueObjects;
+namespace Catalog\Product\Domain\ValueObjects;
 
-use App\Product\Domain\Exceptions\InvalidProductNameException;
+use Catalog\Product\Domain\Exceptions\InvalidProductNameException;
 
 final class ProductName
 {

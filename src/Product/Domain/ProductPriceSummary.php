@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Product\Domain;
+namespace Catalog\Product\Domain;
 
-use App\Product\Domain\ValueObjects\ProductPrice;
-use App\Product\Domain\ValueObjects\ProductPriceDiscountPercentage;
-use App\Shared\Domain\ValueObjects\Currency;
+use Catalog\Product\Domain\ValueObjects\ProductPrice;
+use Catalog\Product\Domain\ValueObjects\ProductPriceDiscountPercentage;
+use Catalog\Shared\Domain\ValueObjects\Currency;
 
 
 final class ProductPriceSummary

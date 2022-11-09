@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Product\Domain\Repository;
+namespace Catalog\Product\Domain\Repository;
 
-use App\Product\Domain\Product;
-use App\Product\Domain\ValueObjects\ProductSku;
-use App\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\Product;
+use Catalog\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductSku;
 
 interface ProductRepository
 {

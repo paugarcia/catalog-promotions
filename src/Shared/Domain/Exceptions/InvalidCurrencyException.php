@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Domain\Exceptions;
+namespace Catalog\Shared\Domain\Exceptions;
 
 final class InvalidCurrencyException extends \DomainException
 {

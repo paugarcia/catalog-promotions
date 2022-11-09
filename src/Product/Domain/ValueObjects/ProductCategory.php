@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Product\Domain\ValueObjects;
+namespace Catalog\Product\Domain\ValueObjects;
 
-use App\Product\Domain\Exceptions\InvalidProductCategoryException;
+use Catalog\Product\Domain\Exceptions\InvalidProductCategoryException;
 
 final class ProductCategory
 {

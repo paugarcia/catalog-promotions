@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Product\Domain\Repository;
+namespace Catalog\Product\Domain\Repository;
 
-use App\Product\Domain\ProductDiscount;
+use Catalog\Product\Domain\ProductDiscount;
 
 interface ProductDiscountRepository
 {

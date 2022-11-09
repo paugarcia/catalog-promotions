@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Product\Domain\Services;
+namespace Catalog\Product\Domain\Services;
 
-use App\Product\Domain\Product;
-use App\Product\Domain\ProductDiscount;
-use App\Product\Domain\ProductPriceSummary;
-use App\Product\Domain\ValueObjects\ProductPrice;
-use App\Product\Domain\ValueObjects\ProductPriceDiscountPercentage;
-use App\Shared\Domain\ValueObjects\Currency;
+use Catalog\Product\Domain\Product;
+use Catalog\Product\Domain\ProductDiscount;
+use Catalog\Product\Domain\ProductPriceSummary;
+use Catalog\Product\Domain\ValueObjects\ProductPrice;
+use Catalog\Product\Domain\ValueObjects\ProductPriceDiscountPercentage;
+use Catalog\Shared\Domain\ValueObjects\Currency;
 
 class MatchProductsDiscountsService
 {
@@ -16,7 +16,7 @@ class MatchProductsDiscountsService
     /**
      * @param ProductDiscount[] $productDiscounts
      */
-    public function __construct(array $productDiscounts)
+    public function __construct(ProductDiscount ...$productDiscounts)
     {
         $this->productDiscounts = array_map(function (ProductDiscount $discount){
             return $discount->toArray();

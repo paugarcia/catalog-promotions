@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Product\Infrastructure;
+namespace Catalog\Product\Infrastructure;
 
-use App\Product\Domain\Repository\ProductDiscountRepository;
-
-use App\Product\Domain\ProductDiscount;
-
-use App\Product\Domain\ValueObjects\ProductSku;
-use App\Product\Domain\ValueObjects\DiscountPercentage;
-use App\Product\Domain\ValueObjects\ProductCategory;
-
-use MongoDB\Client;
+use Catalog\MongoDB\Client;
+use Catalog\Product\Domain\ProductDiscount;
+use Catalog\Product\Domain\Repository\ProductDiscountRepository;
+use Catalog\Product\Domain\ValueObjects\DiscountPercentage;
+use Catalog\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductSku;
 
 final class ProductDiscountMongoRepository implements ProductDiscountRepository
 {

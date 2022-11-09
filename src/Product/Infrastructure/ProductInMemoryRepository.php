@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Product\Infrastructure;
+namespace Catalog\Product\Infrastructure;
 
-use App\Product\Domain\Product;
-
-use App\Product\Domain\Repository\ProductRepository;
-
-use App\Product\Domain\ValueObjects\ProductName;
-use App\Product\Domain\ValueObjects\ProductPrice;
-use App\Product\Domain\ValueObjects\ProductSku;
-use App\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\Product;
+use Catalog\Product\Domain\Repository\ProductRepository;
+use Catalog\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductName;
+use Catalog\Product\Domain\ValueObjects\ProductPrice;
+use Catalog\Product\Domain\ValueObjects\ProductSku;
 
 final class ProductInMemoryRepository implements ProductRepository
 {

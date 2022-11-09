@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Product\Domain;
+namespace Catalog\Product\Domain;
 
-use App\Product\Domain\ValueObjects\ProductSku;
-use App\Product\Domain\ValueObjects\DiscountPercentage;
-use App\Product\Domain\ValueObjects\ProductCategory;
-
-use App\Product\Domain\Exceptions\InvalidProductDiscountException;
+use Catalog\Product\Domain\Exceptions\InvalidProductDiscountException;
+use Catalog\Product\Domain\ValueObjects\DiscountPercentage;
+use Catalog\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductSku;
 
 final class ProductDiscount
 {

@@ -1,14 +1,9 @@
 <?php
 
-namespace App\Product\Application\Commands\SaveProductDiscount;
+namespace Catalog\Product\Application\Commands\SaveProductDiscount;
 
-use App\Product\Domain\ProductDiscount;
-
-use App\Product\Domain\Repository\ProductDiscountRepository;
-
-use App\Product\Domain\ValueObjects\ProductSku;
-use App\Product\Domain\ValueObjects\DiscountPercentage;
-use App\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ProductDiscount;
+use Catalog\Product\Domain\Repository\ProductDiscountRepository;
 
 final class SaveProductDiscountApplicationService
 {

@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Product\Application\Commands\SaveProductDiscount;
+namespace Catalog\Product\Application\Commands\SaveProductDiscount;
 
-use App\Product\Domain\ValueObjects\ProductSku;
-use App\Product\Domain\ValueObjects\DiscountPercentage;
-use App\Product\Domain\ValueObjects\ProductCategory;
-
-use App\Product\Domain\ProductDiscount;
-
-use App\Shared\Application\Command;
-use App\Shared\Application\CommandHandler;
+use Catalog\Product\Domain\ProductDiscount;
+use Catalog\Product\Domain\ValueObjects\DiscountPercentage;
+use Catalog\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductSku;
+use Catalog\Shared\Application\Command;
+use Catalog\Shared\Application\CommandHandler;
 
 final class SaveProductDiscountCommandHandler implements CommandHandler
 {
