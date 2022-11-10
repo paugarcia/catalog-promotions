@@ -3,6 +3,7 @@
 namespace Catalog\Shared\Domain\ValueObjects;
 
 use Catalog\Shared\Domain\Exceptions\InvalidCurrencyException;
+use Catalog\Shared\Domain\Exceptions\InvalidEmptyCurrencyException;
 
 final class Currency
 {
@@ -22,6 +23,11 @@ final class Currency
     }
 
     private function validateCurrency(string $currency): void {
+        if(empty($currency)){
+            throw new InvalidEmptyCurrencyException(
+                "Invalid currency, can't be empty."
+            );
+        }
         if (!in_array($currency, $this->valid_currencies)) {
             throw new InvalidCurrencyException(
                 sprintf("The currency %s, is not valid.", $currency)
