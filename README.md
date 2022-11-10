@@ -15,5 +15,8 @@
 - http://localhost:33000/api/products-with-discounts (All products)
 - http://localhost:33000/api/products-with-discounts?filterByCategory=boots (filter by category)
 
+## TESTS
+- For launch tests `docker-compose exec php-fpm bash` and then `vendor/bin/phpunit --testdox`
+
 ## EXPLANATIONS ON DECISIONS
 - 
