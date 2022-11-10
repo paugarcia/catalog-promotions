@@ -41,6 +41,10 @@ final class ProductDiscountInMemoryRepository implements ProductDiscountReposito
         return $discountList;
     }
 
+    public function findPromotionsByProduct(Product $product){
+
+    }
+
     public function save(ProductDiscount $productDiscount): void
     {
         $this->productDiscounts[] = [
