@@ -14,16 +14,16 @@ use Catalog\Product\Domain\ValueObjects\ProductName;
 use Catalog\Product\Domain\ValueObjects\ProductPrice;
 use Catalog\Product\Domain\ValueObjects\ProductSku;
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\Shared\TestInfrastructure\CatalogTest;
 
-class ProductTest extends TestCase
+class ProductTest extends CatalogTest
 {
     public function testProductShouldBeCreated(): void
     {
-        $sku = "000000";
-        $name = "Product name example";
-        $category = "Product category";
-        $price = 10;
+        $sku = $this->faker->numerify('sku-####');
+        $name = $this->faker->company();
+        $category = $this->faker->company();
+        $price = $this->faker->numberBetween(1, 99);
 
         $product = new Product(
             new ProductSku($sku),
@@ -43,9 +43,9 @@ class ProductTest extends TestCase
     public function testProductWithoutSkuShouldNotBeCreated(): void
     {
         $sku = "";
-        $name = "Product name example";
-        $category = "Product category";
-        $price = 10;
+        $name = $this->faker->company();
+        $category = $this->faker->company();
+        $price = $this->faker->numberBetween(1, 99);
 
         $this->expectException(InvalidProductSkuException::class);
 
@@ -59,10 +59,10 @@ class ProductTest extends TestCase
 
     public function testProductWithoutNameShouldNotBeCreated(): void
     {
-        $sku = "000000";
+        $sku = $this->faker->numerify('sku-####');
         $name = "";
-        $category = "Product category";
-        $price = 10;
+        $category = $this->faker->company();
+        $price = $this->faker->numberBetween(1, 99);
 
         $this->expectException(InvalidProductNameException::class);
 
@@ -76,10 +76,10 @@ class ProductTest extends TestCase
 
     public function testProductWithoutCategoryShouldNotBeCreated(): void
     {
-        $sku = "000000";
-        $name = "Product name example";
+        $sku = $this->faker->numerify('sku-####');
+        $name = $this->faker->company();
         $category = "";
-        $price = 10;
+        $price = $this->faker->numberBetween(1, 99);
 
         $this->expectException(InvalidProductCategoryException::class);
 
@@ -93,10 +93,10 @@ class ProductTest extends TestCase
 
     public function testProductWithPriceLessThan0ShouldNotBeCreated(): void
     {
-        $sku = "000000";
-        $name = "Product name example";
-        $category = "Product category";
-        $price = -1;
+        $sku = $this->faker->numerify('sku-####');
+        $name = $this->faker->company();
+        $category = $this->faker->company();
+        $price = $this->faker->numberBetween(-1, -100);
 
         $this->expectException(InvalidProductPriceException::class);
 

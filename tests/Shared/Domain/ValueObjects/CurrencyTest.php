@@ -6,9 +6,9 @@ use Catalog\Shared\Domain\ValueObjects\Currency;
 use Catalog\Shared\Domain\Exceptions\InvalidCurrencyException;
 use Catalog\Shared\Domain\Exceptions\InvalidEmptyCurrencyException;
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\Shared\TestInfrastructure\CatalogTest;
 
-class CurrencyTest extends TestCase
+class CurrencyTest extends CatalogTest
 {
     public function testCurrencyShouldBeCreated(): void
     {
