@@ -9,45 +9,49 @@ use Catalog\Product\Domain\ValueObjects\ProductSku;
 
 final class ProductDiscount
 {
-    private DiscountPercentage $percentage;
-    private ?ProductSku $sku;
-    private ?ProductCategory $category;
-
-    public function __construct(DiscountPercentage $percentage, ?ProductSku $sku, ?ProductCategory $category)
-    {
-        $this->sku = $sku;
-        $this->percentage = $percentage;
-        $this->category = $category;
-
+    public function __construct(
+        private readonly DiscountPercentage $discountPercentage,
+        private readonly ?ProductSku $productSku,
+        private readonly ?ProductCategory $productCategory
+    ) {
         $this->validateParams();
     }
 
-    public function sku(): ?ProductSku
-    {
-        return $this->sku;
+    public static function create(
+        DiscountPercentage $discountPercentage,
+        ?ProductSku $productSku,
+        ?ProductCategory $productCategory
+    ): self {
+        return new self($discountPercentage, $productSku, $productCategory);
     }
 
-    public function percentage(): DiscountPercentage
+    public function productSku(): ?ProductSku
     {
-        return $this->percentage;
+        return $this->productSku;
     }
 
-    public function category(): ?ProductCategory
+    public function discountPercentage(): DiscountPercentage
     {
-        return $this->category;
+        return $this->discountPercentage;
+    }
+
+    public function productCategory(): ?ProductCategory
+    {
+        return $this->productCategory;
     }
 
     public function toArray(): array
     {
         return [
-          'percentage' => $this->percentage()->value(),
-          'sku' => (null !== $this->sku) ? $this->sku()->value() : null,
-          'category' => (null !== $this->category) ? $this->category()->value() : null,
+            'percentage' => $this->discountPercentage()->value(),
+            'sku' => (null !== $this->productSku) ? $this->productSku()->value() : null,
+            'category' => (null !== $this->productCategory) ? $this->productCategory()->value() : null,
         ];
     }
 
-    private function validateParams(): void {
-        if($this->sku === null && $this->category === null){
+    private function validateParams(): void
+    {
+        if ($this->productSku === null && $this->productCategory === null) {
             throw new InvalidProductDiscountException(
                 sprintf("ProductDiscount not created - Invalid sku and category")
             );

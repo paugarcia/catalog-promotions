@@ -24,7 +24,7 @@ final class SaveProductDiscountCommandHandler implements CommandHandler
         $productSku = ($command->sku() != null) ? new ProductSku($command->sku()) : null;
         $productCategory = ($command->category() != null) ? new ProductCategory($command->category()) : null;
 
-        $productDiscount = new ProductDiscount($discountPercentage, $productSku, $productCategory);
+        $productDiscount = ProductDiscount::create($discountPercentage, $productSku, $productCategory);
 
         $this->saveProductDiscountApplicationService->save($productDiscount);
     }

@@ -8,7 +8,6 @@ use Catalog\Product\Domain\Exceptions\InvalidProductSkuException;
 use Catalog\Product\Domain\Exceptions\InvalidProductNameException;
 use Catalog\Product\Domain\Exceptions\InvalidProductCategoryException;
 use Catalog\Product\Domain\Exceptions\InvalidProductPriceException;
-
 use Catalog\Product\Domain\ValueObjects\ProductCategory;
 use Catalog\Product\Domain\ValueObjects\ProductName;
 use Catalog\Product\Domain\ValueObjects\ProductPrice;
@@ -34,10 +33,10 @@ class ProductTest extends CatalogTest
 
         $this->assertInstanceOf(Product::class, $product);
 
-        $this->assertEquals($sku, $product->sku()->value());
-        $this->assertEquals($name, $product->name()->value());
-        $this->assertEquals($category, $product->category()->value());
-        $this->assertEquals($price, $product->price()->value());
+        $this->assertEquals($sku, $product->productSku()->value());
+        $this->assertEquals($name, $product->productName()->value());
+        $this->assertEquals($category, $product->productCategory()->value());
+        $this->assertEquals($price, $product->productPrice()->value());
     }
 
     public function testProductWithoutSkuShouldNotBeCreated(): void

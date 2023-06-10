@@ -33,7 +33,7 @@ final class ProductMongoRepository implements ProductRepository
         
         if (!empty($products)) {
             foreach ($products as $product) {
-                $productsList[] = new Product(
+                $productsList[] = Product::create(
                     new ProductSku($product['sku']),
                     new ProductName($product['name']),
                     new ProductCategory($product['category']),
@@ -48,10 +48,10 @@ final class ProductMongoRepository implements ProductRepository
     public function save(Product $product): void
     {
         $this->collection->insertOne([
-            'sku' => $product->sku()->value(),
-            'name' => $product->name()->value(),
-            'category' => $product->category()->value(),
-            'price' => $product->price()->value()
+            'sku' => $product->productSku()->value(),
+            'name' => $product->productName()->value(),
+            'category' => $product->productCategory()->value(),
+            'price' => $product->productPrice()->value()
         ]);
     }
 
@@ -63,7 +63,7 @@ final class ProductMongoRepository implements ProductRepository
         ]);
 
         if (!empty($item)) {
-            $product = new Product(
+            $product = Product::create(
                 new ProductSku($item['sku']),
                 new ProductName($item['name']),
                 new ProductCategory($item['category']),

@@ -30,7 +30,7 @@ final class ProductDiscountInMemoryRepository implements ProductDiscountReposito
 
         if (!empty($this->productDiscounts)) {
             foreach ($this->productDiscounts as $discount) {
-                $discountList[] = new ProductDiscount(
+                $discountList[] = ProductDiscount::create(
                     new DiscountPercentage($discount['percentage']),
                     ($discount['sku'] != null) ? new ProductSku($discount['sku']) : null,
                     ($discount['category'] != null) ? new ProductCategory($discount['category']) : null
@@ -48,9 +48,9 @@ final class ProductDiscountInMemoryRepository implements ProductDiscountReposito
     public function save(ProductDiscount $productDiscount): void
     {
         $this->productDiscounts[] = [
-            'percentage' => $productDiscount->percentage()->value(),
-            'sku' => ($productDiscount->sku() != null) ? $productDiscount->sku()->value() : null,
-            'category' => ($productDiscount->category() != null) ? $productDiscount->category()->value() : null,
+            'percentage' => $productDiscount->discountPercentage()->value(),
+            'sku' => ($productDiscount->productSku() != null) ? $productDiscount->productSku()->value() : null,
+            'category' => ($productDiscount->productCategory() != null) ? $productDiscount->productCategory()->value() : null,
         ];
     }
 }

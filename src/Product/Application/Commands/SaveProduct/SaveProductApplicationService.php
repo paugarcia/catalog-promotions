@@ -12,23 +12,27 @@ use Catalog\Product\Domain\ValueObjects\ProductSku;
 
 final class SaveProductApplicationService
 {
-    private ProductRepository $productRepository;
+    private ProductRepository $repository;
 
     public function __construct(ProductRepository $productRepository)
     {
-        $this->productRepository = $productRepository;
+        $this->repository = $productRepository;
     }
 
-    public function save(ProductSku $productSku, ProductName $productName, ProductCategory $productCategory, ProductPrice $productPrice): void
-    {
-        if (!empty($this->productRepository->getBySku($productSku))){
+    public function save(
+        ProductSku $productSku,
+        ProductName $productName,
+        ProductCategory $productCategory,
+        ProductPrice $productPrice
+    ): void {
+        if (!empty($this->repository->getBySku($productSku))) {
             throw new ProductAlreadyExistException(
                 sprintf('Already exist a product with this sku: %s', $productSku->value())
             );
         }
 
-        $product = new Product($productSku, $productName, $productCategory, $productPrice);
+        $product = Product::create($productSku, $productName, $productCategory, $productPrice);
 
-        $this->productRepository->save($product);
+        $this->repository->save($product);
     }
 }

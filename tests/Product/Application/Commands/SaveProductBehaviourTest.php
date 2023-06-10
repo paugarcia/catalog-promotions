@@ -7,11 +7,9 @@ use App\Tests\Shared\TestInfrastructure\CatalogTest;
 use Catalog\Product\Domain\Product;
 
 use Catalog\Product\Domain\Repository\ProductRepository;
-
 use Catalog\Product\Application\Commands\SaveProduct\SaveProductCommand;
 use Catalog\Product\Application\Commands\SaveProduct\SaveProductCommandHandler;
 use Catalog\Product\Application\Commands\SaveProduct\SaveProductApplicationService;
-
 use Catalog\Product\Domain\ValueObjects\ProductCategory;
 use Catalog\Product\Domain\ValueObjects\ProductName;
 use Catalog\Product\Domain\ValueObjects\ProductPrice;
@@ -26,7 +24,7 @@ class SaveProductBehaviourTest extends CatalogTest
         $category = $this->faker->company();
         $price = $this->faker->numberBetween(1, 99);
 
-        $product = new Product(
+        $product = Product::create(
             new ProductSku($sku),
             new ProductName($name),
             new ProductCategory($category),

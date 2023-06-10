@@ -5,10 +5,8 @@ namespace Catalog\Product\Domain\Services;
 use Catalog\Product\Domain\Product;
 use Catalog\Product\Domain\ProductDiscount;
 use Catalog\Product\Domain\ProductPriceSummary;
-
 use Catalog\Product\Domain\ValueObjects\ProductPrice;
 use Catalog\Product\Domain\ValueObjects\ProductPriceDiscountPercentage;
-
 use Catalog\Shared\Domain\ValueObjects\Currency;
 
 class MatchProductsDiscountsService
@@ -44,12 +42,12 @@ class MatchProductsDiscountsService
      */
     private function matchProductBestDiscount(Product $product): ProductPriceSummary
     {
-        $originalPriceValue = $product->price()->value();
-        $finalPriceValue = $product->price()->value();
+        $originalPriceValue = $product->productPrice()->value();
+        $finalPriceValue = $product->productPrice()->value();
         $discountPercentage = null;
 
         foreach ($this->productDiscounts as $discount) {
-            if ($discount['sku'] === $product->sku()->value() || $discount['category'] === $product->category()->value()) {
+            if ($discount['sku'] === $product->productSku()->value() || $discount['category'] === $product->productCategory()->value()) {
                 $provisionalFinalPrice = $originalPriceValue - ($originalPriceValue * ($discount['percentage'] / 100));
                 if ($finalPriceValue > $provisionalFinalPrice) {
                     $finalPriceValue = $provisionalFinalPrice;
@@ -59,7 +57,7 @@ class MatchProductsDiscountsService
         }
 
         return new ProductPriceSummary (
-            $product->price(),
+            $product->productPrice(),
             new ProductPrice($finalPriceValue),
             new Currency("EUR"),
             $discountPercentage !== null ? new ProductPriceDiscountPercentage($discountPercentage) : null

@@ -9,17 +9,21 @@ use Catalog\Shared\Domain\ValueObjects\Currency;
 
 final class ProductPriceSummary
 {
-    private ProductPrice $original;
-    private ProductPrice $final;
-    private ?ProductPriceDiscountPercentage $discountPercentage;
-    private Currency $currency;
+    public function __construct(
+        private readonly ProductPrice $original,
+        private readonly ProductPrice $final,
+        private readonly Currency $currency,
+        private readonly ?ProductPriceDiscountPercentage $discountPercentage
+    ) {
+    }
 
-    public function __construct(ProductPrice $original, ProductPrice $final, Currency $currency, ?ProductPriceDiscountPercentage $discountPercentage)
-    {
-        $this->original = $original;
-        $this->final = $final;
-        $this->currency = $currency;
-        $this->discountPercentage = $discountPercentage;
+    public static function create(
+        ProductPrice $original,
+        ProductPrice $final,
+        Currency $currency,
+        ?ProductPriceDiscountPercentage $discountPercentage
+    ): self {
+        return new self($original, $final, $currency, $discountPercentage);
     }
 
     public function original(): ProductPrice
@@ -48,7 +52,8 @@ final class ProductPriceSummary
             'original' => $this->original->value(),
             'final' => $this->final->value(),
             'currency' => $this->currency->value(),
-            'discount_percentage' => ($this->discountPercentage !== null) ? $this->discountPercentage->value() : $this->discountPercentage(),
+            'discount_percentage' => ($this->discountPercentage !== null) ? $this->discountPercentage->value(
+            ) : $this->discountPercentage(),
         ];
     }
 }

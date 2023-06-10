@@ -49,7 +49,7 @@ final class ProductInMemoryRepository implements ProductRepository
         $productsList = [];
 
         foreach ($this->products as $product) {
-            $productsList[$product['sku']] = new Product(
+            $productsList[$product['sku']] = Product::create(
                 new ProductSku($product['sku']),
                 new ProductName($product['name']),
                 new ProductCategory($product['category']),
@@ -62,11 +62,11 @@ final class ProductInMemoryRepository implements ProductRepository
 
     public function save(Product $product): void
     {
-        $this->products[$product->sku()->value()] = [
-            'sku' => $product->sku()->value(),
-            'name' => $product->name()->value(),
-            'category' => $product->category()->value(),
-            'price' => $product->price()->value()
+        $this->products[$product->productSku()->value()] = [
+            'sku' => $product->productSku()->value(),
+            'name' => $product->productName()->value(),
+            'category' => $product->productCategory()->value(),
+            'price' => $product->productPrice()->value()
         ];
     }
 
@@ -75,7 +75,7 @@ final class ProductInMemoryRepository implements ProductRepository
         $product = null;
 
         if (!empty($this->products[$sku->value()])){
-            $product = new Product(
+            $product = Product::create(
                 new ProductSku($this->products[$sku->value()]['sku']),
                 new ProductName($this->products[$sku->value()]['name']),
                 new ProductCategory($this->products[$sku->value()]['category']),
@@ -91,7 +91,7 @@ final class ProductInMemoryRepository implements ProductRepository
 
         foreach ($this->products as $product) {
             if($category->value() === $product['category']){
-                $productsList[$product['sku']] = new Product(
+                $productsList[$product['sku']] = Product::create(
                     new ProductSku($product['sku']),
                     new ProductName($product['name']),
                     new ProductCategory($product['category']),

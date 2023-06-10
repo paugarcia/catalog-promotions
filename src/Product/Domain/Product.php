@@ -9,46 +9,50 @@ use Catalog\Product\Domain\ValueObjects\ProductSku;
 
 final class Product
 {
-    private ProductSku $sku;
-    private ProductName $name;
-    private ProductCategory $category;
-    private ProductPrice $price;
-
-    public function __construct(ProductSku $sku, ProductName $name, ProductCategory $category, ProductPrice $price)
-    {
-        $this->sku = $sku;
-        $this->name = $name;
-        $this->category = $category;
-        $this->price = $price;
+    public function __construct(
+        private readonly ProductSku $productSku,
+        private readonly ProductName $productName,
+        private readonly ProductCategory $productCategory,
+        private readonly ProductPrice $productPrice
+    ) {
     }
 
-    public function sku(): ProductSku
-    {
-        return $this->sku;
+    public static function create(
+        ProductSku $productSku,
+        ProductName $productName,
+        ProductCategory $productCategory,
+        ProductPrice $productPrice
+    ): self {
+        return new self($productSku, $productName, $productCategory, $productPrice);
     }
 
-    public function name(): ProductName
+    public function productSku(): ProductSku
     {
-        return $this->name;
+        return $this->productSku;
     }
 
-    public function category(): ProductCategory
+    public function productName(): ProductName
     {
-        return $this->category;
+        return $this->productName;
     }
 
-    public function price(): ProductPrice
+    public function productCategory(): ProductCategory
     {
-        return $this->price;
+        return $this->productCategory;
+    }
+
+    public function productPrice(): ProductPrice
+    {
+        return $this->productPrice;
     }
 
     public function toArray(): array
     {
         return [
-            'sku' => $this->sku->value(),
-            'name' => $this->name->value(),
-            'category' => $this->category->value(),
-            'price' => $this->price->value()
+            'sku' => $this->productSku->value(),
+            'name' => $this->productName->value(),
+            'category' => $this->productCategory->value(),
+            'price' => $this->productPrice->value()
         ];
     }
 }
