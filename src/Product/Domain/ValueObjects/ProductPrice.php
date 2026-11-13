@@ -6,7 +6,7 @@ use Catalog\Product\Domain\Exceptions\InvalidProductPriceException;
 
 final class ProductPrice
 {
-    private readonly int $price;
+    private int $price;
 
     public function __construct(int $price)
     {
