@@ -6,7 +6,7 @@ use Catalog\Product\Domain\Exceptions\InvalidProductSkuException;
 
 final class ProductSku
 {
-    private string $sku;
+    private readonly string $sku;
 
     public function __construct(string $sku)
     {
@@ -19,10 +19,10 @@ final class ProductSku
         return $this->sku;
     }
 
-    private function validateSku($sku): void
+    private function validateSku(string $sku): void
     {
-        if (empty($sku)){
-            throw new InvalidProductSkuException(sprintf("Invalid product sku, can't be empty."));
+        if (trim($sku) === '') {
+            throw new InvalidProductSkuException("Invalid product sku, can't be empty.");
         }
     }
 }

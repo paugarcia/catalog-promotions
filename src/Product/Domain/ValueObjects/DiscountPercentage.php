@@ -6,7 +6,10 @@ use Catalog\Product\Domain\Exceptions\InvalidDiscountPercentageException;
 
 final class DiscountPercentage
 {
-    private int $percentage;
+    public const MIN_PERCENTAGE = 1;
+    public const MAX_PERCENTAGE = 100;
+
+    private readonly int $percentage;
 
     public function __construct(int $percentage)
     {
@@ -24,11 +27,16 @@ final class DiscountPercentage
         return $this->percentage . "%";
     }
 
-    private function validatePercentage($percentage): void
+    private function validatePercentage(int $percentage): void
     {
-        if ($percentage <= 0 || $percentage > 100){
+        if ($percentage < self::MIN_PERCENTAGE || $percentage > self::MAX_PERCENTAGE) {
             throw new InvalidDiscountPercentageException(
-                sprintf("Invalid percentage (%s), must be more than 0 and less than 100.", $percentage)
+                sprintf(
+                    "Invalid percentage (%s), must be between %d and %d.",
+                    $percentage,
+                    self::MIN_PERCENTAGE,
+                    self::MAX_PERCENTAGE
+                )
             );
         }
     }

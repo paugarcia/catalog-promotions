@@ -9,7 +9,7 @@ final class Currency
 {
     private string $currency;
 
-    private array $valid_currencies = ['EUR'];
+    private array $validCurrencies = ['EUR'];
 
     public function __construct(string $currency)
     {
@@ -22,13 +22,14 @@ final class Currency
         return $this->currency;
     }
 
-    private function validateCurrency(string $currency): void {
-        if(empty($currency)){
+    private function validateCurrency(string $currency): void
+    {
+        if (trim($currency) === '') {
             throw new InvalidEmptyCurrencyException(
                 "Invalid currency, can't be empty."
             );
         }
-        if (!in_array($currency, $this->valid_currencies)) {
+        if (!in_array($currency, $this->validCurrencies, true)) {
             throw new InvalidCurrencyException(
                 sprintf("The currency %s, is not valid.", $currency)
             );

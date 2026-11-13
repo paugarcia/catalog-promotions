@@ -6,7 +6,7 @@ use Catalog\Product\Domain\Exceptions\InvalidProductNameException;
 
 final class ProductName
 {
-    private string $name;
+    private readonly string $name;
 
     public function __construct(string $name)
     {
@@ -19,10 +19,10 @@ final class ProductName
         return $this->name;
     }
 
-    private function validateName($name): void
+    private function validateName(string $name): void
     {
-        if (empty($name)){
-            throw new InvalidProductNameException(sprintf("Invalid product name, can't be empty."));
+        if (trim($name) === '') {
+            throw new InvalidProductNameException("Invalid product name, can't be empty.");
         }
     }
 }
