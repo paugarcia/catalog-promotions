@@ -5,8 +5,8 @@ namespace App\Tests\Product\Application\Queries;
 
 use App\Tests\Shared\TestInfrastructure\CatalogTest;
 
-use Catalog\Product\Infrastructure\ProductDiscountInMemoryRepository;
-use Catalog\Product\Infrastructure\ProductInMemoryRepository;
+use Catalog\Product\Infrastructure\Persistence\Memory\ProductDiscountInMemoryRepository;
+use Catalog\Product\Infrastructure\Persistence\Memory\ProductInMemoryRepository;
 
 use Catalog\Product\Application\Queries\GetProductsWithDiscounts\GetProductsWithDiscountsApplicationService;
 use Catalog\Product\Application\Queries\GetProductsWithDiscounts\GetProductsWithDiscountsQuery;
