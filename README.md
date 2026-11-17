@@ -20,6 +20,7 @@
 
 ## TESTS
 - Run the complete suite: `make test`
+- Generate an HTML coverage report in `build/test/phpunit/`: `make coverage-html`
 
 ## EXPLANATIONS ON DECISIONS
 - I had used Symfony for developing a simple API product/discounts, and the response from them is a list of product with discounts applied.
