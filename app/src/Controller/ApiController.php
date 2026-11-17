@@ -12,8 +12,8 @@ use Catalog\Product\Application\Queries\GetProductsWithDiscounts\GetProductsWith
 use Catalog\Product\Application\Queries\GetProductsWithDiscounts\GetProductsWithDiscountsApplicationService;
 use Catalog\Product\Domain\Services\MatchProductsDiscountsService;
 
-use Catalog\Product\Infrastructure\ProductInMemoryRepository;
-use Catalog\Product\Infrastructure\ProductDiscountInMemoryRepository;
+use Catalog\Product\Infrastructure\Persistence\Memory\ProductInMemoryRepository;
+use Catalog\Product\Infrastructure\Persistence\Memory\ProductDiscountInMemoryRepository;
 
 
 class ApiController extends AbstractController

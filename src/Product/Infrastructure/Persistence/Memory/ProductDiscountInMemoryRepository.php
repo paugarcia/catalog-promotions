@@ -1,6 +1,6 @@
 <?php
 
-namespace Catalog\Product\Infrastructure;
+namespace Catalog\Product\Infrastructure\Persistence\Memory;
 
 use Catalog\Product\Domain\ProductDiscount;
 use Catalog\Product\Domain\Repository\ProductDiscountRepository;

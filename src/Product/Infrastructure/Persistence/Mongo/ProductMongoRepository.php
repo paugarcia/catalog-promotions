@@ -1,6 +1,6 @@
 <?php
 
-namespace Catalog\Product\Infrastructure;
+namespace Catalog\Product\Infrastructure\Persistence\Mongo;
 
 use Catalog\MongoDB\Client;
 use Catalog\Product\Domain\Product;
