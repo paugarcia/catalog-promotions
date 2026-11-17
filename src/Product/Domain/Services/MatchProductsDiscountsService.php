@@ -9,58 +9,65 @@ use Catalog\Product\Domain\ValueObjects\ProductPrice;
 use Catalog\Product\Domain\ValueObjects\ProductPriceDiscountPercentage;
 use Catalog\Shared\Domain\ValueObjects\Currency;
 
-class MatchProductsDiscountsService
+final class MatchProductsDiscountsService
 {
-    private array $productDiscounts;
-
     /**
      * @param Product[] $products
-     * @param ProductDiscount[] $discountProducts
+     * @param ProductDiscount[] $discounts
      * @return array
      */
-    public function __invoke(array $products, array $discountProducts): array
+    public function __invoke(array $products, array $discounts): array
     {
-        $matchProducts = [];
+        return array_map(
+            function (Product $product) use ($discounts): array {
+                $productArray = $product->toArray();
+                $productArray['price'] = $this->matchProductBestDiscount($product, $discounts)->toArray();
 
-        $this->productDiscounts = array_map(function (ProductDiscount $discount) {
-            return $discount->toArray();
-        }, $discountProducts);
-
-
-        foreach ($products as $product) {
-            $productArray = $product->toArray();
-            $productArray['price'] = $this->matchProductBestDiscount($product)->toArray();
-            $matchProducts[] = $productArray;
-        }
-
-        return $matchProducts;
+                return $productArray;
+            },
+            $products
+        );
     }
 
     /**
      * @param Product $product
+     * @param ProductDiscount[] $discounts
      * @return ProductPriceSummary
      */
-    private function matchProductBestDiscount(Product $product): ProductPriceSummary
+    private function matchProductBestDiscount(Product $product, array $discounts): ProductPriceSummary
     {
         $originalPriceValue = $product->productPrice()->value();
-        $finalPriceValue = $product->productPrice()->value();
-        $discountPercentage = null;
+        $bestPrice = $originalPriceValue;
+        $bestDiscount = null;
 
-        foreach ($this->productDiscounts as $discount) {
-            if ($discount['sku'] === $product->productSku()->value() || $discount['category'] === $product->productCategory()->value()) {
-                $provisionalFinalPrice = $originalPriceValue - ($originalPriceValue * ($discount['percentage'] / 100));
-                if ($finalPriceValue > $provisionalFinalPrice) {
-                    $finalPriceValue = $provisionalFinalPrice;
-                    $discountPercentage = $discount['percentage'] . "%";
-                }
+        foreach ($discounts as $discount) {
+            if (!$this->discountAppliesTo($product, $discount)) {
+                continue;
+            }
+
+            $discountedPrice = $originalPriceValue * (1 - $discount->discountPercentage()->value() / 100);
+
+            if ($discountedPrice < $bestPrice) {
+                $bestPrice = $discountedPrice;
+                $bestDiscount = $discount->discountPercentage()->toString();
             }
         }
 
-        return new ProductPriceSummary (
+        return ProductPriceSummary::create(
             $product->productPrice(),
-            new ProductPrice($finalPriceValue),
-            new Currency("EUR"),
-            $discountPercentage !== null ? new ProductPriceDiscountPercentage($discountPercentage) : null
+            new ProductPrice($bestPrice),
+            new Currency('EUR'),
+            $bestDiscount !== null ? new ProductPriceDiscountPercentage($bestDiscount) : null
         );
+    }
+
+    private function discountAppliesTo(Product $product, ProductDiscount $discount): bool
+    {
+        $skuMatches = $discount->productSku() !== null
+            && $discount->productSku()->value() === $product->productSku()->value();
+        $categoryMatches = $discount->productCategory() !== null
+            && $discount->productCategory()->value() === $product->productCategory()->value();
+
+        return $skuMatches || $categoryMatches;
     }
 }

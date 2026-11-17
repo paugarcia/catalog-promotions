@@ -21,9 +21,9 @@ final class ProductPrice
 
     private function validateProductPrice(int $price): void
     {
-        if ($price <= 0){
+        if ($price <= 0) {
             throw new InvalidProductPriceException(
-                sprintf("Invalid price (%s), must be more than 0", $price)
+                sprintf("Invalid price (%s), must be greater than 0.", $price)
             );
         }
     }

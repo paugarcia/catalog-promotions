@@ -6,7 +6,7 @@ use Catalog\Product\Domain\Exceptions\InvalidProductCategoryException;
 
 final class ProductCategory
 {
-    private string $category;
+    private readonly string $category;
 
     public function __construct(string $category)
     {
@@ -19,10 +19,10 @@ final class ProductCategory
         return $this->category;
     }
 
-    private function validateCategory($category): void
+    private function validateCategory(string $category): void
     {
-        if (empty($category)){
-            throw new InvalidProductCategoryException(sprintf("Invalid product category, can't be empty."));
+        if (trim($category) === '') {
+            throw new InvalidProductCategoryException("Invalid product category, can't be empty.");
         }
     }
 }
