@@ -45,7 +45,9 @@ final class MatchProductsDiscountsService
                 continue;
             }
 
-            $discountedPrice = $originalPriceValue * (1 - $discount->discountPercentage()->value() / 100);
+            $discountedPrice = (int) round(
+                $originalPriceValue * (1 - $discount->discountPercentage()->value() / 100)
+            );
 
             if ($discountedPrice < $bestPrice) {
                 $bestPrice = $discountedPrice;
