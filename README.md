@@ -1,7 +1,7 @@
 # Pau Garcia -> Catalog promotions
 
 ## 📚 Made with
-- PHP 8.1
+- PHP 8.4
 - DDD
 - Hexagonal Architecture (Ports and Adapters)
 - CQRS
@@ -9,15 +9,16 @@
 - Testing with PHPUnit
 
 ## 🚀 Main Instructions 
-- Launch docker containers: `docker-compose up -d`
-- On the first run, install dependencies: `docker-compose exec php-fpm bash` and then `composer install`
+- Install and start Docker Desktop (or another Docker Engine with Compose v2). PHP and Composer run inside the container; no host installation is required.
+- Launch Docker containers: `docker compose up -d --build`
+- On the first run, install dependencies: `docker compose exec php-fpm composer install`
 
 ## 🖇️ API ROUTES 
 - http://localhost:33000/api/products-with-discounts (All products)
 - http://localhost:33000/api/products-with-discounts?filterByCategory=boots (filter by category)
 
 ## TESTS
-- For launch tests `docker-compose exec php-fpm bash` and then `vendor/bin/phpunit --testdox`
+- Run tests with `docker compose exec php-fpm vendor/bin/phpunit --testdox`
 
 ## EXPLANATIONS ON DECISIONS
 - I had used Symfony for developing a simple API product/discounts, and the response from them is a list of product with discounts applied.
