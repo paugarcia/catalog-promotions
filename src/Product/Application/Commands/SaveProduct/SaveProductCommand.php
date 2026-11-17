@@ -4,19 +4,15 @@ namespace Catalog\Product\Application\Commands\SaveProduct;
 
 use Catalog\Shared\Application\Command;
 
-final class SaveProductCommand implements Command
+final readonly class SaveProductCommand implements Command
 {
-    private string $sku;
-    private string $name;
-    private string $category;
-    private int $price;
-    
-    public function __construct(string $sku, string $name, string $category, int $price)
+    public function __construct(
+        private string $sku,
+        private string $name,
+        private string $category,
+        private int $price,
+    )
     {
-        $this->sku = $sku;
-        $this->name = $name;
-        $this->category = $category;
-        $this->price = $price;
     }
 
     public function sku(): string

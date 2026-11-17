@@ -9,13 +9,10 @@ use Catalog\Product\Domain\ValueObjects\ProductSku;
 use Catalog\Shared\Application\Command;
 use Catalog\Shared\Application\CommandHandler;
 
-final class SaveProductCommandHandler implements CommandHandler
+final readonly class SaveProductCommandHandler implements CommandHandler
 {
-    private SaveProductApplicationService $saveProductApplicationService;
-
-    public function __construct(SaveProductApplicationService $saveProductApplicationService)
+    public function __construct(private SaveProductApplicationService $saveProductApplicationService)
     {
-        $this->saveProductApplicationService = $saveProductApplicationService;
     }
 
     public function handle(Command $command): void

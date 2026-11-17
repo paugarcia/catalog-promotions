@@ -3,8 +3,6 @@
 namespace App\Tests\Shared\Domain\ValueObjects;
 
 use Catalog\Shared\Domain\ValueObjects\Currency;
-use Catalog\Shared\Domain\Exceptions\InvalidCurrencyException;
-use Catalog\Shared\Domain\Exceptions\InvalidEmptyCurrencyException;
 
 use App\Tests\Shared\TestInfrastructure\CatalogTest;
 
@@ -12,26 +10,19 @@ class CurrencyTest extends CatalogTest
 {
     public function testCurrencyShouldBeCreated(): void
     {
-        $currencyValue = "EUR";
-        $currency = new Currency($currencyValue);
+        $currency = Currency::EUR;
 
         $this->assertInstanceOf(Currency::class, $currency);
-        $this->assertEquals($currencyValue, $currency->value());
+        $this->assertSame('EUR', $currency->value);
     }
 
     public function testCurrencyWithoutValueShouldNotBeCreated(): void
     {
-        $currencyValue = "";
-        $this->expectException(InvalidEmptyCurrencyException::class);
-
-        new Currency($currencyValue);
+        $this->assertNull(Currency::tryFrom(''));
     }
 
     public function testCurrencyWithNotValidCurrencyShouldNotBeCreated():void
     {
-        $currencyValue = "USD";
-        $this->expectException(InvalidCurrencyException::class);
-
-        new Currency($currencyValue);
+        $this->assertNull(Currency::tryFrom('USD'));
     }
 }

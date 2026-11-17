@@ -4,17 +4,14 @@ namespace Catalog\Product\Domain\ValueObjects;
 
 use Catalog\Product\Domain\Exceptions\InvalidDiscountPercentageException;
 
-final class DiscountPercentage
+final readonly class DiscountPercentage
 {
     public const MIN_PERCENTAGE = 1;
     public const MAX_PERCENTAGE = 100;
 
-    private readonly int $percentage;
-
-    public function __construct(int $percentage)
+    public function __construct(private int $percentage)
     {
         $this->validatePercentage($percentage);
-        $this->percentage = $percentage;
     }
 
     public function value(): int
@@ -22,7 +19,7 @@ final class DiscountPercentage
         return $this->percentage;
     }
 
-    public function toString(): string
+    public function __toString(): string
     {
         return $this->percentage . "%";
     }

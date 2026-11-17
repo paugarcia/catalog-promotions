@@ -4,14 +4,11 @@ namespace Catalog\Product\Domain\ValueObjects;
 
 use Catalog\Product\Domain\Exceptions\InvalidProductSkuException;
 
-final class ProductSku
+final readonly class ProductSku
 {
-    private readonly string $sku;
-
-    public function __construct(string $sku)
+    public function __construct(private string $sku)
     {
         $this->validateSku($sku);
-        $this->sku = $sku;
     }
 
     public function value(): string

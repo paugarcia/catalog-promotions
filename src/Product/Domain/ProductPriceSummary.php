@@ -51,7 +51,7 @@ final class ProductPriceSummary
         return [
             'original' => $this->original->value(),
             'final' => $this->final->value(),
-            'currency' => $this->currency->value(),
+            'currency' => $this->currency->value,
             'discount_percentage' => $this->discountPercentage !== null
                 ? $this->discountPercentage->value()
                 : null,

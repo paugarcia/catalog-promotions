@@ -5,13 +5,10 @@ namespace Catalog\Product\Domain\ValueObjects;
 use Catalog\Product\Domain\Exceptions\InvalidProductPriceDiscountPercentageException;
 
 
-final class ProductPriceDiscountPercentage
+final readonly class ProductPriceDiscountPercentage
 {
-    private readonly string $productPriceDiscountPercentage;
-
-    public function __construct(string $productPriceDiscountPercentage)
+    public function __construct(private string $productPriceDiscountPercentage)
     {
-        $this->productPriceDiscountPercentage = $productPriceDiscountPercentage;
         $this->validateFormat();
     }
 

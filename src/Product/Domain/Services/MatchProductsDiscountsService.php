@@ -9,7 +9,7 @@ use Catalog\Product\Domain\ValueObjects\ProductPrice;
 use Catalog\Product\Domain\ValueObjects\ProductPriceDiscountPercentage;
 use Catalog\Shared\Domain\ValueObjects\Currency;
 
-final class MatchProductsDiscountsService
+final readonly class MatchProductsDiscountsService
 {
     /**
      * @param Product[] $products
@@ -51,14 +51,14 @@ final class MatchProductsDiscountsService
 
             if ($discountedPrice < $bestPrice) {
                 $bestPrice = $discountedPrice;
-                $bestDiscount = $discount->discountPercentage()->toString();
+                $bestDiscount = (string) $discount->discountPercentage();
             }
         }
 
         return ProductPriceSummary::create(
             $product->productPrice(),
             new ProductPrice($bestPrice),
-            new Currency('EUR'),
+            Currency::EUR,
             $bestDiscount !== null ? new ProductPriceDiscountPercentage($bestDiscount) : null
         );
     }

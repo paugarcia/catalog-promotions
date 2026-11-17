@@ -9,20 +9,17 @@ use Catalog\Product\Domain\ValueObjects\ProductSku;
 use Catalog\Shared\Application\Command;
 use Catalog\Shared\Application\CommandHandler;
 
-final class SaveProductDiscountCommandHandler implements CommandHandler
+final readonly class SaveProductDiscountCommandHandler implements CommandHandler
 {
-    private SaveProductDiscountApplicationService $saveProductDiscountApplicationService;
-
-    public function __construct(SaveProductDiscountApplicationService $saveProductDiscountApplicationService)
+    public function __construct(private SaveProductDiscountApplicationService $saveProductDiscountApplicationService)
     {
-        $this->saveProductDiscountApplicationService = $saveProductDiscountApplicationService;
     }
 
     public function handle(Command $command): void
     {
         $discountPercentage = new DiscountPercentage($command->percentage());
-        $productSku = ($command->sku() != null) ? new ProductSku($command->sku()) : null;
-        $productCategory = ($command->category() != null) ? new ProductCategory($command->category()) : null;
+        $productSku = $command->sku() !== null ? new ProductSku($command->sku()) : null;
+        $productCategory = $command->category() !== null ? new ProductCategory($command->category()) : null;
 
         $productDiscount = ProductDiscount::create($discountPercentage, $productSku, $productCategory);
 

@@ -10,13 +10,10 @@ use Catalog\Product\Domain\ValueObjects\ProductName;
 use Catalog\Product\Domain\ValueObjects\ProductPrice;
 use Catalog\Product\Domain\ValueObjects\ProductSku;
 
-final class SaveProductApplicationService
+final readonly class SaveProductApplicationService
 {
-    private ProductRepository $repository;
-
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(private ProductRepository $repository)
     {
-        $this->repository = $productRepository;
     }
 
     public function save(

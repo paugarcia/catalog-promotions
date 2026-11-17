@@ -4,14 +4,11 @@ namespace Catalog\Product\Domain\ValueObjects;
 
 use Catalog\Product\Domain\Exceptions\InvalidProductPriceException;
 
-final class ProductPrice
+final readonly class ProductPrice
 {
-    private int $price;
-
-    public function __construct(int $price)
+    public function __construct(private int $price)
     {
         $this->validateProductPrice($price);
-        $this->price = $price;
     }
 
     public function value(): int
