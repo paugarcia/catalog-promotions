@@ -4,14 +4,11 @@ namespace Catalog\Product\Domain\ValueObjects;
 
 use Catalog\Product\Domain\Exceptions\InvalidProductNameException;
 
-final class ProductName
+final readonly class ProductName
 {
-    private readonly string $name;
-
-    public function __construct(string $name)
+    public function __construct(private string $name)
     {
         $this->validateName($name);
-        $this->name = $name;
     }
 
     public function value(): string

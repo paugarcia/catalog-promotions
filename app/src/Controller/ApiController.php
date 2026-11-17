@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Catalog\Product\Application\Queries\GetProductsWithDiscounts\GetProductsWithDiscountsQuery;
 use Catalog\Product\Application\Queries\GetProductsWithDiscounts\GetProductsWithDiscountsQueryHandler;
 use Catalog\Product\Application\Queries\GetProductsWithDiscounts\GetProductsWithDiscountsApplicationService;
+use Catalog\Product\Domain\Services\MatchProductsDiscountsService;
 
 use Catalog\Product\Infrastructure\ProductInMemoryRepository;
 use Catalog\Product\Infrastructure\ProductDiscountInMemoryRepository;
@@ -23,7 +24,10 @@ class ApiController extends AbstractController
         $productDiscountRepository = new ProductDiscountInMemoryRepository();
 
         $query = new GetProductsWithDiscountsQuery($request->query->get('filterByCategory'));
-        $queryHandler = new GetProductsWithDiscountsQueryHandler(new GetProductsWithDiscountsApplicationService($productRepository, $productDiscountRepository));
+        $queryHandler = new GetProductsWithDiscountsQueryHandler(
+            new GetProductsWithDiscountsApplicationService($productRepository, $productDiscountRepository),
+            new MatchProductsDiscountsService(),
+        );
 
         try {
             $productsWithDiscounts = $queryHandler->handle($query);

@@ -4,14 +4,11 @@ namespace Catalog\Product\Domain\ValueObjects;
 
 use Catalog\Product\Domain\Exceptions\InvalidProductCategoryException;
 
-final class ProductCategory
+final readonly class ProductCategory
 {
-    private readonly string $category;
-
-    public function __construct(string $category)
+    public function __construct(private string $category)
     {
         $this->validateCategory($category);
-        $this->category = $category;
     }
 
     public function value(): string

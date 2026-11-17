@@ -11,6 +11,7 @@ use Catalog\Product\Infrastructure\ProductInMemoryRepository;
 use Catalog\Product\Application\Queries\GetProductsWithDiscounts\GetProductsWithDiscountsApplicationService;
 use Catalog\Product\Application\Queries\GetProductsWithDiscounts\GetProductsWithDiscountsQuery;
 use Catalog\Product\Application\Queries\GetProductsWithDiscounts\GetProductsWithDiscountsQueryHandler;
+use Catalog\Product\Domain\Services\MatchProductsDiscountsService;
 
 
 class GetProductsWithDiscountsQueryTest extends CatalogTest
@@ -32,7 +33,8 @@ class GetProductsWithDiscountsQueryTest extends CatalogTest
             new GetProductsWithDiscountsApplicationService(
                 $this->productRepository,
                 $this->productDiscountRepository
-            )
+            ),
+            new MatchProductsDiscountsService(),
         );
 
         $productsWithDiscounts = $queryHandler->handle($query);

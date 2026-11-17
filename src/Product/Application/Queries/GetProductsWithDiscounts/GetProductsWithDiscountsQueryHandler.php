@@ -7,13 +7,13 @@ use Catalog\Product\Domain\ValueObjects\ProductCategory;
 use Catalog\Shared\Application\QueryHandler;
 use Catalog\Shared\Application\Query;
 
-final class GetProductsWithDiscountsQueryHandler implements QueryHandler
+final readonly class GetProductsWithDiscountsQueryHandler implements QueryHandler
 {
-    private GetProductsWithDiscountsApplicationService $applicationService;
-
-    public function __construct(GetProductsWithDiscountsApplicationService $applicationService)
+    public function __construct(
+        private GetProductsWithDiscountsApplicationService $applicationService,
+        private MatchProductsDiscountsService $matchProductsDiscountsService,
+    )
     {
-        $this->applicationService = $applicationService;
     }
 
     public function handle(Query $query): array
@@ -29,8 +29,7 @@ final class GetProductsWithDiscountsQueryHandler implements QueryHandler
         $productsDiscounts = $this->applicationService->getAllDiscounts();
 
         if(!empty($products)){
-            $matchProductsDiscountsService = new MatchProductsDiscountsService();
-            $response = $matchProductsDiscountsService->__invoke($products, $productsDiscounts);
+            $response = ($this->matchProductsDiscountsService)($products, $productsDiscounts);
         }
 
         return $response;

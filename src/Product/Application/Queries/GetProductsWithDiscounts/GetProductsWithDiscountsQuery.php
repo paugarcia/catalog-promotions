@@ -4,13 +4,10 @@ namespace Catalog\Product\Application\Queries\GetProductsWithDiscounts;
 
 use Catalog\Shared\Application\Query;
 
-final class GetProductsWithDiscountsQuery implements Query
+final readonly class GetProductsWithDiscountsQuery implements Query
 {
-    private ?string $filterCategory;
-
-    public function __construct(?string $filterCategory)
+    public function __construct(private ?string $filterCategory)
     {
-        $this->filterCategory = $filterCategory;
     }
 
     public function filterCategory(): ?string

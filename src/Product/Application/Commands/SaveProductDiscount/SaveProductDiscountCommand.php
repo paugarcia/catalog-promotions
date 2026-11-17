@@ -4,17 +4,14 @@ namespace Catalog\Product\Application\Commands\SaveProductDiscount;
 
 use Catalog\Shared\Application\Command;
 
-final class SaveProductDiscountCommand implements Command
+final readonly class SaveProductDiscountCommand implements Command
 {
-    private int $percentage;
-    private ?string $sku;
-    private ?string $category;
-    
-    public function __construct(int $percentage, ?string $sku, ?string $category)
+    public function __construct(
+        private int $percentage,
+        private ?string $sku,
+        private ?string $category,
+    )
     {
-        $this->percentage = $percentage;
-        $this->sku = $sku;
-        $this->category = $category;
     }
 
     public function percentage(): int

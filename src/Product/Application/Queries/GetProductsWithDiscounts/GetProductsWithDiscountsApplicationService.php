@@ -6,15 +6,13 @@ use Catalog\Product\Domain\Repository\ProductDiscountRepository;
 use Catalog\Product\Domain\Repository\ProductRepository;
 use Catalog\Product\Domain\ValueObjects\ProductCategory;
 
-final class GetProductsWithDiscountsApplicationService
+final readonly class GetProductsWithDiscountsApplicationService
 {
-    private ProductRepository $productRepository;
-    private ProductDiscountRepository $productDiscountRepository;
-
-    public function __construct(ProductRepository $productRepository, ProductDiscountRepository $productDiscountRepository)
+    public function __construct(
+        private ProductRepository $productRepository,
+        private ProductDiscountRepository $productDiscountRepository,
+    )
     {
-        $this->productRepository = $productRepository;
-        $this->productDiscountRepository = $productDiscountRepository;
     }
 
     public function getAllProducts(): array
