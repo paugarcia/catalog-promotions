@@ -67,7 +67,7 @@ final class ProductMongoRepository implements ProductRepository
                 new ProductSku($item['sku']),
                 new ProductName($item['name']),
                 new ProductCategory($item['category']),
-                new ProductPrice($product['price'])
+                new ProductPrice($item['price'])
             );
         }
 
