@@ -10,15 +10,17 @@
 
 ## 🚀 Main Instructions 
 - Install and start Docker Desktop (or another Docker Engine with Compose v2). PHP and Composer run inside the container; no host installation is required.
-- Launch Docker containers: `docker compose up -d --build`
-- On the first run, install dependencies: `docker compose exec php-fpm composer install`
+- Build and start the project: `make up`
+- Stop the project: `make down`
+- See all available commands: `make help`
 
 ## 🖇️ API ROUTES 
 - http://localhost:33000/api/products-with-discounts (All products)
 - http://localhost:33000/api/products-with-discounts?filterByCategory=boots (filter by category)
 
 ## TESTS
-- Run tests with `docker compose exec php-fpm vendor/bin/phpunit --testdox`
+- Run the complete suite: `make test`
+- Generate an HTML coverage report in `build/test/phpunit/`: `make coverage-html`
 
 ## EXPLANATIONS ON DECISIONS
 - I had used Symfony for developing a simple API product/discounts, and the response from them is a list of product with discounts applied.
