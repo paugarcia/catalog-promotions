@@ -8,12 +8,12 @@ use Catalog\Product\Domain\Exceptions\InvalidProductSkuException;
 use Catalog\Product\Domain\Exceptions\InvalidProductNameException;
 use Catalog\Product\Domain\Exceptions\InvalidProductCategoryException;
 use Catalog\Product\Domain\Exceptions\InvalidProductPriceException;
-use Catalog\Product\Domain\Exceptions\InvalidProductIdException;
 use Catalog\Product\Domain\ValueObjects\ProductCategory;
 use Catalog\Product\Domain\ValueObjects\ProductId;
 use Catalog\Product\Domain\ValueObjects\ProductName;
 use Catalog\Product\Domain\ValueObjects\ProductPrice;
 use Catalog\Product\Domain\ValueObjects\ProductSku;
+use Catalog\Shared\Domain\Exceptions\InvalidUuidException;
 
 use App\Tests\Shared\TestInfrastructure\CatalogTest;
 
@@ -122,7 +122,7 @@ class ProductTest extends CatalogTest
 
     public function testProductWithInvalidIdShouldNotBeCreated(): void
     {
-        $this->expectException(InvalidProductIdException::class);
+        $this->expectException(InvalidUuidException::class);
 
         new ProductId('not-a-uuid');
     }
