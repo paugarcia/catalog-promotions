@@ -34,14 +34,14 @@ class ApiController extends AbstractController
         } catch (\Exception $e) {
             return new JsonResponse(
                 ['message' => '[Error] ' . $e->getMessage()],
-                400
+                Response::HTTP_BAD_REQUEST
             );
         }
 
         if (empty($productsWithDiscounts)) {
             return new JsonResponse(
                 ['message' => 'Not found products.'],
-                404
+                Response::HTTP_NOT_FOUND
             );
         }
 
