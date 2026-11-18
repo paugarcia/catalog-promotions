@@ -2,10 +2,12 @@
 
 namespace Catalog\Product\Application\Commands\SaveProduct;
 
-use Catalog\Product\Domain\Exceptions\ProductAlreadyExistException;
+use Catalog\Product\Domain\Exceptions\ProductAlreadyExistByIdException;
+use Catalog\Product\Domain\Exceptions\ProductAlreadyExistBySkuException;
 use Catalog\Product\Domain\Product;
 use Catalog\Product\Domain\Repository\ProductRepository;
 use Catalog\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductId;
 use Catalog\Product\Domain\ValueObjects\ProductName;
 use Catalog\Product\Domain\ValueObjects\ProductPrice;
 use Catalog\Product\Domain\ValueObjects\ProductSku;
@@ -17,19 +19,42 @@ final readonly class SaveProductApplicationService
     }
 
     public function save(
+        ProductId $productId,
         ProductSku $productSku,
         ProductName $productName,
         ProductCategory $productCategory,
         ProductPrice $productPrice
     ): void {
-        if (!empty($this->repository->getBySku($productSku))) {
-            throw new ProductAlreadyExistException(
-                sprintf('Already exist a product with this sku: %s', $productSku->value())
-            );
+        $product = Product::create($productId, $productSku, $productName, $productCategory, $productPrice);
+
+        if ($this->isIdempotent($product)) {
+            return;
         }
 
-        $product = Product::create($productSku, $productName, $productCategory, $productPrice);
+        $this->ensureSkuIsAvailable($productSku);
 
         $this->repository->save($product);
+    }
+
+    private function isIdempotent(Product $product): bool
+    {
+        $existingProduct = $this->repository->getById($product->productId());
+
+        if ($existingProduct === null) {
+            return false;
+        }
+
+        if (!$existingProduct->equals($product)) {
+            throw new ProductAlreadyExistByIdException($product->productId());
+        }
+
+        return true;
+    }
+
+    private function ensureSkuIsAvailable(ProductSku $productSku): void
+    {
+        if ($this->repository->getBySku($productSku) !== null) {
+            throw new ProductAlreadyExistBySkuException($productSku);
+        }
     }
 }
