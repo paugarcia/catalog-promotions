@@ -45,12 +45,7 @@ final readonly class SaveProductApplicationService
         }
 
         if (!$existingProduct->equals($product)) {
-            throw new ProductAlreadyExistByIdException(
-                sprintf(
-                    'A product with id %s already exists with different data.',
-                    $product->productId()->value()
-                )
-            );
+            throw new ProductAlreadyExistByIdException($product->productId());
         }
 
         return true;
@@ -59,9 +54,7 @@ final readonly class SaveProductApplicationService
     private function ensureSkuIsAvailable(ProductSku $productSku): void
     {
         if ($this->repository->getBySku($productSku) !== null) {
-            throw new ProductAlreadyExistBySkuException(
-                sprintf('A product with sku %s already exists.', $productSku->value())
-            );
+            throw new ProductAlreadyExistBySkuException($productSku);
         }
     }
 }

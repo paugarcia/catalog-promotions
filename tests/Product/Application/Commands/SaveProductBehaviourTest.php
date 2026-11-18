@@ -99,6 +99,9 @@ class SaveProductBehaviourTest extends CatalogTest
         $productRepositoryMock->expects($this->never())->method('save');
 
         $this->expectException(ProductAlreadyExistByIdException::class);
+        $this->expectExceptionMessage(
+            sprintf(ProductAlreadyExistByIdException::MESSAGE_TEMPLATE, $product->productId()->value())
+        );
 
         $service->save(
             $product->productId(),
@@ -120,6 +123,9 @@ class SaveProductBehaviourTest extends CatalogTest
         $productRepositoryMock->expects($this->never())->method('save');
 
         $this->expectException(ProductAlreadyExistBySkuException::class);
+        $this->expectExceptionMessage(
+            sprintf(ProductAlreadyExistBySkuException::MESSAGE_TEMPLATE, $product->productSku()->value())
+        );
 
         $service->save(
             new ProductId($this->faker->uuid()),
