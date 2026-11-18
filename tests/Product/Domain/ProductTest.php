@@ -9,9 +9,11 @@ use Catalog\Product\Domain\Exceptions\InvalidProductNameException;
 use Catalog\Product\Domain\Exceptions\InvalidProductCategoryException;
 use Catalog\Product\Domain\Exceptions\InvalidProductPriceException;
 use Catalog\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductId;
 use Catalog\Product\Domain\ValueObjects\ProductName;
 use Catalog\Product\Domain\ValueObjects\ProductPrice;
 use Catalog\Product\Domain\ValueObjects\ProductSku;
+use Catalog\Shared\Domain\Exceptions\InvalidUuidException;
 
 use App\Tests\Shared\TestInfrastructure\CatalogTest;
 
@@ -19,12 +21,14 @@ class ProductTest extends CatalogTest
 {
     public function testProductShouldBeCreated(): void
     {
+        $productId = $this->faker->uuid();
         $sku = $this->faker->numerify('sku-####');
         $name = $this->faker->company();
         $category = $this->faker->company();
         $price = $this->faker->numberBetween(1, 99);
 
         $product = new Product(
+            new ProductId($productId),
             new ProductSku($sku),
             new ProductName($name),
             new ProductCategory($category),
@@ -33,6 +37,7 @@ class ProductTest extends CatalogTest
 
         $this->assertInstanceOf(Product::class, $product);
 
+        $this->assertEquals($productId, $product->productId()->value());
         $this->assertEquals($sku, $product->productSku()->value());
         $this->assertEquals($name, $product->productName()->value());
         $this->assertEquals($category, $product->productCategory()->value());
@@ -41,6 +46,7 @@ class ProductTest extends CatalogTest
 
     public function testProductWithoutSkuShouldNotBeCreated(): void
     {
+        $productId = $this->faker->uuid();
         $sku = "";
         $name = $this->faker->company();
         $category = $this->faker->company();
@@ -49,6 +55,7 @@ class ProductTest extends CatalogTest
         $this->expectException(InvalidProductSkuException::class);
 
         new Product(
+            new ProductId($productId),
             new ProductSku($sku),
             new ProductName($name),
             new ProductCategory($category),
@@ -58,6 +65,7 @@ class ProductTest extends CatalogTest
 
     public function testProductWithoutNameShouldNotBeCreated(): void
     {
+        $productId = $this->faker->uuid();
         $sku = $this->faker->numerify('sku-####');
         $name = "";
         $category = $this->faker->company();
@@ -66,6 +74,7 @@ class ProductTest extends CatalogTest
         $this->expectException(InvalidProductNameException::class);
 
         new Product(
+            new ProductId($productId),
             new ProductSku($sku),
             new ProductName($name),
             new ProductCategory($category),
@@ -75,6 +84,7 @@ class ProductTest extends CatalogTest
 
     public function testProductWithoutCategoryShouldNotBeCreated(): void
     {
+        $productId = $this->faker->uuid();
         $sku = $this->faker->numerify('sku-####');
         $name = $this->faker->company();
         $category = "";
@@ -83,6 +93,7 @@ class ProductTest extends CatalogTest
         $this->expectException(InvalidProductCategoryException::class);
 
         new Product(
+            new ProductId($productId),
             new ProductSku($sku),
             new ProductName($name),
             new ProductCategory($category),
@@ -92,6 +103,7 @@ class ProductTest extends CatalogTest
 
     public function testProductWithPriceLessThan0ShouldNotBeCreated(): void
     {
+        $productId = $this->faker->uuid();
         $sku = $this->faker->numerify('sku-####');
         $name = $this->faker->company();
         $category = $this->faker->company();
@@ -100,10 +112,18 @@ class ProductTest extends CatalogTest
         $this->expectException(InvalidProductPriceException::class);
 
         new Product(
+            new ProductId($productId),
             new ProductSku($sku),
             new ProductName($name),
             new ProductCategory($category),
             new ProductPrice($price)
         );
+    }
+
+    public function testProductWithInvalidIdShouldNotBeCreated(): void
+    {
+        $this->expectException(InvalidUuidException::class);
+
+        new ProductId('not-a-uuid');
     }
 }
