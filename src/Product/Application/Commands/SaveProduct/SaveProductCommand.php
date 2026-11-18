@@ -7,12 +7,18 @@ use Catalog\Shared\Application\Command;
 final readonly class SaveProductCommand implements Command
 {
     public function __construct(
+        private string $productId,
         private string $sku,
         private string $name,
         private string $category,
         private int $price,
     )
     {
+    }
+
+    public function productId(): string
+    {
+        return $this->productId;
     }
 
     public function sku(): string

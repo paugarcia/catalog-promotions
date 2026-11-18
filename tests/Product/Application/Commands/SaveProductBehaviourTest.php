@@ -11,6 +11,7 @@ use Catalog\Product\Application\Commands\SaveProduct\SaveProductCommand;
 use Catalog\Product\Application\Commands\SaveProduct\SaveProductCommandHandler;
 use Catalog\Product\Application\Commands\SaveProduct\SaveProductApplicationService;
 use Catalog\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductId;
 use Catalog\Product\Domain\ValueObjects\ProductName;
 use Catalog\Product\Domain\ValueObjects\ProductPrice;
 use Catalog\Product\Domain\ValueObjects\ProductSku;
@@ -19,12 +20,14 @@ class SaveProductBehaviourTest extends CatalogTest
 {
     public function testProductShouldBeSaved()
     {
+        $productId = $this->faker->uuid();
         $sku = $this->faker->numerify('sku-####');
         $name = $this->faker->company();
         $category = $this->faker->company();
         $price = $this->faker->numberBetween(1, 99);
 
         $product = Product::create(
+            new ProductId($productId),
             new ProductSku($sku),
             new ProductName($name),
             new ProductCategory($category),
@@ -33,7 +36,7 @@ class SaveProductBehaviourTest extends CatalogTest
 
         $productRepositoryMock = $this->createMock(ProductRepository::class);
 
-        $command = new SaveProductCommand($sku, $name, $category, $price);
+        $command = new SaveProductCommand($productId, $sku, $name, $category, $price);
         $commandHandler = new SaveProductCommandHandler(new SaveProductApplicationService($productRepositoryMock));
 
         $productRepositoryMock

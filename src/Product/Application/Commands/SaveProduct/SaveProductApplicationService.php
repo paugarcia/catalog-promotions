@@ -6,6 +6,7 @@ use Catalog\Product\Domain\Exceptions\ProductAlreadyExistException;
 use Catalog\Product\Domain\Product;
 use Catalog\Product\Domain\Repository\ProductRepository;
 use Catalog\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductId;
 use Catalog\Product\Domain\ValueObjects\ProductName;
 use Catalog\Product\Domain\ValueObjects\ProductPrice;
 use Catalog\Product\Domain\ValueObjects\ProductSku;
@@ -17,6 +18,7 @@ final readonly class SaveProductApplicationService
     }
 
     public function save(
+        ProductId $productId,
         ProductSku $productSku,
         ProductName $productName,
         ProductCategory $productCategory,
@@ -28,7 +30,7 @@ final readonly class SaveProductApplicationService
             );
         }
 
-        $product = Product::create($productSku, $productName, $productCategory, $productPrice);
+        $product = Product::create($productId, $productSku, $productName, $productCategory, $productPrice);
 
         $this->repository->save($product);
     }

@@ -5,6 +5,7 @@ namespace Catalog\Product\Infrastructure\Persistence\Memory;
 use Catalog\Product\Domain\Product;
 use Catalog\Product\Domain\Repository\ProductRepository;
 use Catalog\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductId;
 use Catalog\Product\Domain\ValueObjects\ProductName;
 use Catalog\Product\Domain\ValueObjects\ProductPrice;
 use Catalog\Product\Domain\ValueObjects\ProductSku;
@@ -13,30 +14,35 @@ final class ProductInMemoryRepository implements ProductRepository
 {
     private array $products = [
         '000001' => [
+            'productId' => '10000000-0000-4000-8000-000000000001',
             'sku' => '000001',
             'name' => 'BV Lean leather ankle boots',
             'category' => 'boots',
             'price' => 89000,
         ],
         '000002' => [
+            'productId' => '10000000-0000-4000-8000-000000000002',
             'sku' => '000002',
             'name' => 'BV Lean leather ankle boots',
             'category' => 'boots',
             'price' => 99000,
         ],
         '000003' => [
+            'productId' => '10000000-0000-4000-8000-000000000003',
             'sku' => '000003',
             'name' => 'Ashlington leather ankle boots',
             'category' => 'boots',
             'price' => 89000,
         ],
         '000004' => [
+            'productId' => '10000000-0000-4000-8000-000000000004',
             'sku' => '000004',
             'name' => 'Naima embellished suede sandals',
             'category' => 'sandals',
             'price' => 79500,
         ],
         '000005' => [
+            'productId' => '10000000-0000-4000-8000-000000000005',
             'sku' => '000005',
             'name' => 'Nathane leather sneakers',
             'category' => 'sneakers',
@@ -50,6 +56,7 @@ final class ProductInMemoryRepository implements ProductRepository
 
         foreach ($this->products as $product) {
             $productsList[$product['sku']] = Product::create(
+                new ProductId($product['productId']),
                 new ProductSku($product['sku']),
                 new ProductName($product['name']),
                 new ProductCategory($product['category']),
@@ -63,6 +70,7 @@ final class ProductInMemoryRepository implements ProductRepository
     public function save(Product $product): void
     {
         $this->products[$product->productSku()->value()] = [
+            'productId' => $product->productId()->value(),
             'sku' => $product->productSku()->value(),
             'name' => $product->productName()->value(),
             'category' => $product->productCategory()->value(),
@@ -76,6 +84,7 @@ final class ProductInMemoryRepository implements ProductRepository
 
         if (!empty($this->products[$sku->value()])){
             $product = Product::create(
+                new ProductId($this->products[$sku->value()]['productId']),
                 new ProductSku($this->products[$sku->value()]['sku']),
                 new ProductName($this->products[$sku->value()]['name']),
                 new ProductCategory($this->products[$sku->value()]['category']),
@@ -92,6 +101,7 @@ final class ProductInMemoryRepository implements ProductRepository
         foreach ($this->products as $product) {
             if($category->value() === $product['category']){
                 $productsList[$product['sku']] = Product::create(
+                    new ProductId($product['productId']),
                     new ProductSku($product['sku']),
                     new ProductName($product['name']),
                     new ProductCategory($product['category']),

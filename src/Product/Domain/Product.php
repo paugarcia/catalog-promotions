@@ -3,6 +3,7 @@
 namespace Catalog\Product\Domain;
 
 use Catalog\Product\Domain\ValueObjects\ProductCategory;
+use Catalog\Product\Domain\ValueObjects\ProductId;
 use Catalog\Product\Domain\ValueObjects\ProductName;
 use Catalog\Product\Domain\ValueObjects\ProductPrice;
 use Catalog\Product\Domain\ValueObjects\ProductSku;
@@ -10,6 +11,7 @@ use Catalog\Product\Domain\ValueObjects\ProductSku;
 final class Product
 {
     public function __construct(
+        private readonly ProductId $productId,
         private readonly ProductSku $productSku,
         private readonly ProductName $productName,
         private readonly ProductCategory $productCategory,
@@ -18,12 +20,18 @@ final class Product
     }
 
     public static function create(
+        ProductId $productId,
         ProductSku $productSku,
         ProductName $productName,
         ProductCategory $productCategory,
         ProductPrice $productPrice
     ): self {
-        return new self($productSku, $productName, $productCategory, $productPrice);
+        return new self($productId, $productSku, $productName, $productCategory, $productPrice);
+    }
+
+    public function productId(): ProductId
+    {
+        return $this->productId;
     }
 
     public function productSku(): ProductSku
@@ -49,6 +57,7 @@ final class Product
     public function toArray(): array
     {
         return [
+            'productId' => $this->productId->value(),
             'sku' => $this->productSku->value(),
             'name' => $this->productName->value(),
             'category' => $this->productCategory->value(),
