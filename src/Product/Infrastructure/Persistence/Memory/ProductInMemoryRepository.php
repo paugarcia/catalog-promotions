@@ -78,6 +78,23 @@ final class ProductInMemoryRepository implements ProductRepository
         ];
     }
 
+    public function getById(ProductId $productId): ?Product
+    {
+        foreach ($this->products as $product) {
+            if ($productId->value() === $product['productId']) {
+                return Product::create(
+                    new ProductId($product['productId']),
+                    new ProductSku($product['sku']),
+                    new ProductName($product['name']),
+                    new ProductCategory($product['category']),
+                    new ProductPrice($product['price'])
+                );
+            }
+        }
+
+        return null;
+    }
+
     public function getBySku(ProductSku $sku): ?Product
     {
         $product = null;

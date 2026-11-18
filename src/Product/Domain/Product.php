@@ -54,6 +54,11 @@ final class Product
         return $this->productPrice;
     }
 
+    public function equals(self $other): bool
+    {
+        return $this->toArray() === $other->toArray();
+    }
+
     public function toArray(): array
     {
         return [

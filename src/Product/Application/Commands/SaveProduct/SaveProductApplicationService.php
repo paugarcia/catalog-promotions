@@ -2,7 +2,8 @@
 
 namespace Catalog\Product\Application\Commands\SaveProduct;
 
-use Catalog\Product\Domain\Exceptions\ProductAlreadyExistException;
+use Catalog\Product\Domain\Exceptions\ProductAlreadyExistByIdException;
+use Catalog\Product\Domain\Exceptions\ProductAlreadyExistBySkuException;
 use Catalog\Product\Domain\Product;
 use Catalog\Product\Domain\Repository\ProductRepository;
 use Catalog\Product\Domain\ValueObjects\ProductCategory;
@@ -24,14 +25,43 @@ final readonly class SaveProductApplicationService
         ProductCategory $productCategory,
         ProductPrice $productPrice
     ): void {
-        if (!empty($this->repository->getBySku($productSku))) {
-            throw new ProductAlreadyExistException(
-                sprintf('Already exist a product with this sku: %s', $productSku->value())
+        $product = Product::create($productId, $productSku, $productName, $productCategory, $productPrice);
+
+        if ($this->isIdempotent($product)) {
+            return;
+        }
+
+        $this->ensureSkuIsAvailable($productSku);
+
+        $this->repository->save($product);
+    }
+
+    private function isIdempotent(Product $product): bool
+    {
+        $existingProduct = $this->repository->getById($product->productId());
+
+        if ($existingProduct === null) {
+            return false;
+        }
+
+        if (!$existingProduct->equals($product)) {
+            throw new ProductAlreadyExistByIdException(
+                sprintf(
+                    'A product with id %s already exists with different data.',
+                    $product->productId()->value()
+                )
             );
         }
 
-        $product = Product::create($productId, $productSku, $productName, $productCategory, $productPrice);
+        return true;
+    }
 
-        $this->repository->save($product);
+    private function ensureSkuIsAvailable(ProductSku $productSku): void
+    {
+        if ($this->repository->getBySku($productSku) !== null) {
+            throw new ProductAlreadyExistBySkuException(
+                sprintf('A product with sku %s already exists.', $productSku->value())
+            );
+        }
     }
 }
