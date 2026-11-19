@@ -9,3 +9,8 @@ kernel:
 index:
     path: /api/products-with-discounts
     controller: App\Controller\ApiController::index
+
+product_by_id:
+    path: /api/products/{productId}
+    controller: App\Controller\ApiController::getProduct
+    methods: [GET]

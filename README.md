@@ -15,6 +15,7 @@
 - See all available commands: `make help`
 
 ## 🖇️ API ROUTES 
+- http://localhost:33000/api/products/10000000-0000-4000-8000-000000000001 (product by UUID)
 - http://localhost:33000/api/products-with-discounts (All products)
 - http://localhost:33000/api/products-with-discounts?filterByCategory=boots (filter by category)
 
