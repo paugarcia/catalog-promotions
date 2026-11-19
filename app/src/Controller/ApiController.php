@@ -11,7 +11,8 @@ use Catalog\Product\Application\Queries\GetProductsWithDiscounts\GetProductsWith
 use Catalog\Product\Application\Queries\GetProductsWithDiscounts\GetProductsWithDiscountsQueryHandler;
 use Catalog\Product\Application\Queries\GetProductsWithDiscounts\GetProductsWithDiscountsApplicationService;
 use Catalog\Product\Domain\Services\MatchProductsDiscountsService;
-use Catalog\Product\Domain\ValueObjects\ProductId;
+use Catalog\Product\Application\Queries\GetProductById\GetProductByIdQuery;
+use Catalog\Product\Application\Queries\GetProductById\GetProductByIdQueryHandler;
 use Catalog\Shared\Domain\Exceptions\InvalidUuidException;
 
 use Catalog\Product\Infrastructure\Persistence\Memory\ProductInMemoryRepository;
@@ -20,15 +21,13 @@ use Catalog\Product\Infrastructure\Persistence\Memory\ProductDiscountInMemoryRep
 
 class ApiController extends AbstractController
 {
-    public function getProduct(string $productId): JsonResponse
+    public function getProduct(string $productId, GetProductByIdQueryHandler $getProductById): JsonResponse
     {
         try {
-            $id = new ProductId($productId);
+            $product = $getProductById->handle(new GetProductByIdQuery($productId));
         } catch (InvalidUuidException $e) {
             return new JsonResponse(['message' => '[Error] ' . $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
-
-        $product = (new ProductInMemoryRepository())->getById($id);
 
         if ($product === null) {
             return new JsonResponse(['message' => 'Product not found.'], Response::HTTP_NOT_FOUND);
