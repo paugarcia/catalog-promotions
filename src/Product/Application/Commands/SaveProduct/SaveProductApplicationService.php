@@ -27,8 +27,8 @@ final readonly class SaveProductApplicationService
     ): void {
         $product = Product::create($productId, $productSku, $productName, $productCategory, $productPrice);
 
-        if ($this->isIdempotent($product)) {
-            return;
+        if ($this->repository->getById($productId) !== null) {
+            throw new ProductAlreadyExistByIdException($productId);
         }
 
         $this->ensureSkuIsAvailable($productSku);
@@ -36,21 +36,12 @@ final readonly class SaveProductApplicationService
         $this->repository->save($product);
     }
 
-    private function isIdempotent(Product $product): bool
+    private function ensureIdIsAvailable(ProductId $productId): void
     {
-        $existingProduct = $this->repository->getById($product->productId());
-
-        if ($existingProduct === null) {
-            return false;
+        if ($this->repository->getById($productId) !== null) {
+            throw new ProductAlreadyExistByIdException($productId);
         }
-
-        if (!$existingProduct->equals($product)) {
-            throw new ProductAlreadyExistByIdException($product->productId());
-        }
-
-        return true;
     }
-
     private function ensureSkuIsAvailable(ProductSku $productSku): void
     {
         if ($this->repository->getBySku($productSku) !== null) {
@@ -58,3 +49,5 @@ final readonly class SaveProductApplicationService
         }
     }
 }
+
+

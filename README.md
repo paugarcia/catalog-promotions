@@ -15,9 +15,10 @@
 - See all available commands: `make help`
 
 ## 🖇️ API ROUTES 
-- http://localhost:33000/api/products/10000000-0000-4000-8000-000000000001 (product by UUID)
-- http://localhost:33000/api/products-with-discounts (All products)
-- http://localhost:33000/api/products-with-discounts?filterByCategory=boots (filter by category)
+- `PUT http://localhost:33000/api/products/{productId}` (create a product with a client-provided UUID)
+- `GET http://localhost:33000/api/products/10000000-0000-4000-8000-000000000001` (product by UUID)
+- `GET http://localhost:33000/api/products-with-discounts` (All products)
+- `GET http://localhost:33000/api/products-with-discounts?filterByCategory=boots` (filter by category)
 
 ## TESTS
 - Run the complete suite: `make test`
@@ -30,4 +31,12 @@
 - I had created all structure with Hexagonal Architecture and DDD, with this technic separate our business rules with the rest of the code.
 - One bounder context "Catalog" inside this have 3 entities (Product, ProductDiscount and ProductPriceSummary).
 - I had used the CQRS pattern in our use cases (Commands and Queries), this helps us in test them.
+
+
+Create a product with `PUT /api/products/{productId}` and JSON body
+`{"sku":"new-sku","name":"Product","category":"boots","price":12345}`.
+Price is a positive integer in the smallest currency unit. Success returns `201` and a
+`Location` header; invalid input returns `400`, and a duplicate UUID or SKU returns `409`.
+The in-memory repository does not persist changes between requests.
+
 

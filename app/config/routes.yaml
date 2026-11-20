@@ -14,3 +14,8 @@ product_by_id:
     path: /api/products/{productId}
     controller: App\Controller\ApiController::getProduct
     methods: [GET]
+
+product_create:
+    path: /api/products/{productId}
+    controller: App\Controller\ApiController::createProduct
+    methods: [PUT]
