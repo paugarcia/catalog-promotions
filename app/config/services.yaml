@@ -14,5 +14,10 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
     Catalog\:
         resource: '../../src/'
+    Catalog\Product\Domain\Repository\ProductRepository: '@Catalog\Product\Infrastructure\Persistence\Memory\ProductInMemoryRepository'
+    Catalog\Product\Domain\Repository\ProductDiscountRepository: '@Catalog\Product\Infrastructure\Persistence\Memory\ProductDiscountInMemoryRepository'

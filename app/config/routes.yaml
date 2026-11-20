@@ -8,9 +8,15 @@ kernel:
 
 index:
     path: /api/products-with-discounts
-    controller: App\Controller\ApiController::index
+    controller: App\Controller\Catalog\Product\GetProductsWithDiscountsController
+    methods: [GET]
 
 product_by_id:
     path: /api/products/{productId}
-    controller: App\Controller\ApiController::getProduct
+    controller: App\Controller\Catalog\Product\GetProductByIdController
     methods: [GET]
+
+product_create:
+    path: /api/products/{productId}
+    controller: App\Controller\Catalog\Product\CreateProductController
+    methods: [PUT]

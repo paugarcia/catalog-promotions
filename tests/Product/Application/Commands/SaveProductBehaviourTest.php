@@ -57,7 +57,7 @@ class SaveProductBehaviourTest extends CatalogTest
         $commandHandler->handle($command);
     }
 
-    public function testSavingTheSameProductTwiceShouldBeIdempotent(): void
+    public function testSavingTheSameProductTwiceShouldFail(): void
     {
         $product = $this->createProduct();
         $productRepositoryMock = $this->createMock(ProductRepository::class);
@@ -71,6 +71,8 @@ class SaveProductBehaviourTest extends CatalogTest
 
         $productRepositoryMock->expects($this->never())->method('getBySku');
         $productRepositoryMock->expects($this->never())->method('save');
+
+        $this->expectException(ProductAlreadyExistByIdException::class);
 
         $service->save(
             $product->productId(),
@@ -147,3 +149,5 @@ class SaveProductBehaviourTest extends CatalogTest
         );
     }
 }
+
+
