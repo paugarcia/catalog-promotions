@@ -13,6 +13,7 @@
 - Build and start the project: `make up`
 - Stop the project: `make down`
 - See all available commands: `make help`
+- For code structure and development conventions, see [AGENTS.md](./AGENTS.md).
 
 ## 🖇️ API ROUTES 
 - `PUT http://localhost:33000/api/products/{productId}` (create a product with a client-provided UUID)
