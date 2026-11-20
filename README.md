@@ -25,6 +25,11 @@
 - Run the complete suite: `make test`
 - Generate an HTML coverage report in `build/test/phpunit/`: `make coverage-html`
 
+## SPEC-DRIVEN DEVELOPMENT
+- This project is beginning to adopt Spec-Driven Development (SDD): define the expected behavior and acceptance criteria before implementation.
+- Browse the numbered initiatives and their work order in [docs/specs](./docs/specs/README.md).
+- Add new initiative specs under `docs/specs/` using the next available number. Each initiative README describes its workstreams, dependencies, and implementation order.
+
 ## EXPLANATIONS ON DECISIONS
 - I had used Symfony for developing a simple API product/discounts, and the response from them is a list of product with discounts applied.
 - I use a simple Docker environment (Nginx and PHP-FPM) to run the project.
@@ -39,5 +44,4 @@ Create a product with `PUT /api/products/{productId}` and JSON body
 Price is a positive integer in the smallest currency unit. Success returns `201` and a
 `Location` header; invalid input returns `400`, and a duplicate UUID or SKU returns `409`.
 The in-memory repository does not persist changes between requests.
-
 
